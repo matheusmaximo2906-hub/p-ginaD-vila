@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doe à um Hospital de Amor!</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: url('https://hospitaldeamor.com.br/site/wp-content/uploads/2021/08/capa-marca.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #fff;
+        text-align: center;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    header {
+        font-size: 42px;
+        font-weight: bold;
+        margin-top: 40px;
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 40px auto;
+        background: rgba(0,0,0,0.7);
+        padding: 30px;
+        border-radius: 14px;
+        box-shadow: 0 3px 20px rgba(0,0,0,0.5);
+        font-size: 20px;
+        line-height: 1.8;
+    }
+
+    .pix-box {
+        margin-top: 25px;
+        background: #fff;
+        color: #000;
+        border-radius: 10px;
+        padding: 20px;
+        font-size: 18px;
+        display: inline-block;
+        position: relative;
+    }
+
+    .pix-box button {
+        margin-top: 15px;
+        padding: 10px 20px;
+        background: #1e3dd6;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .pix-box button:hover {
+        background: #1531aa;
+        transform: scale(1.05);
+    }
+
+    .back-btn {
+        margin: 30px auto;
+        background: #ffa500;
+        color: black;
+        padding: 14px 28px;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: 20px;
+        text-decoration: none;
+        display: inline-block;
+        transition: 0.3s;
+    }
+
+    .back-btn:hover {
+        background: #ffb84d;
+        transform: scale(1.05);
+    }
+</style>
+</head>
+<body>
+
+<header>Doe para um <strong>Hospital de Amor</strong> e que luta contra o cancêr!</header>
+
+<div class="container">
+    <p><strong>Sobre o Hospital de Amor:</strong></p>
+    <p>
+        Nossa missão é sempre oferecer atendimento médico humanizado e de excelência para pacientes oncológicos do Sistema Único de Saúde.  
+        O Hospital de Amor realiza tratamentos, pesquisas, prevenção e campanhas educativas, sempre colocando o paciente em primeiro lugar.
+    </p>
+
+    <p><strong>Como você pode ajudar:</strong></p>
+    <div class="pix-box">
+        <p>Doe para o Hospital!</p>
+        <p><strong>Chave PIX:</strong> meuapoio@hospitaldeamor.com.br</p>
+        <button onclick="copiarPIX()">Copiar Chave PIX</button>
+    </div>
+</div>
+
+<a href="index.html" class="back-btn">Voltar para a Página Inicial</a>
+
+<script>
+function copiarPIX() {
+    const chave = "meuapoio@hospitaldeamor.com.br";
+    navigator.clipboard.writeText(chave).then(() => {
+        alert("Chave PIX copiada para a área de transferência! Agora, abra o seu banco e transfira para contribuir e ajudar mais pessoas no mundo!");
+    });
+}
+</script>
+
+</body>
+</html>

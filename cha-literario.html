@@ -13,42 +13,79 @@
         color: white;
         font-family: Arial, sans-serif;
         overflow-x: hidden;
+        overflow-y: auto;
+        font-size: 22px; /* texto maior */
     }
 
     header {
         background: linear-gradient(90deg, #3c0078, #8d22ff, #d4a017);
-        padding: 40px 0;
+        padding: 50px 0;
         text-align: center;
-        font-size: 36px;
+        font-size: 42px; /* título maior */
         font-weight: bold;
     }
 
     .back-btn {
         margin: 20px;
         background: #d4a017;
-        padding: 12px 20px;
+        padding: 14px 24px;
         border-radius: 10px;
         color: black;
         text-decoration: none;
         font-weight: bold;
         display: inline-block;
+        font-size: 20px;
     }
 
     .container {
         text-align: center;
         margin-top: 40px;
-        padding: 20px;
+        padding: 30px;
+    }
+
+    h2 {
+        color: #ffa500;
+        margin-top: 40px;
+        font-size: 32px; /* títulos maiores */
+    }
+
+    p {
+        margin-top: 18px;
+        line-height: 1.8;
+    }
+
+    .video-container {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .video-container video {
+        width: 90%;
+        max-width: 800px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .info-frame {
+        margin: 30px auto 60px auto;
+        background: white;
+        color: black;
+        border: 3px solid #1e3dd6;
+        border-radius: 12px;
+        padding: 25px;
+        max-width: 800px;
         font-size: 20px;
+        text-align: left;
     }
 
     /* EMOJIS SUBINDO */
     .emoji {
         position: fixed;
-        bottom: -40px;
-        font-size: 32px;
+        bottom: -50px;
+        font-size: 36px;
         animation: subir 8s linear infinite;
         user-select: none;
-        opacity: 0.8;
+        opacity: 0.85;
     }
 
     @keyframes subir {
@@ -68,6 +105,31 @@
     Bem-vindo ao nosso delicioso e inspirador <strong>Chá Literário!</strong>!  
     <br><br>
     Aqui celebramos livros, histórias, encontros, xícaras de chá e muita imaginação!
+
+    <!-- NOVA SEÇÃO -->
+    <h2>O que é o Chá Literário?</h2>
+    <p>
+        Um chá literário é um evento divertido e educativo que incentiva a leitura. 
+        As pessoas compartilham livros, discutem textos, produzem seus próprios escritos e interagem em um ambiente acolhedor, muitas vezes com comidas e bebidas.
+    </p>
+
+    <p>
+        Atividades comuns: apresentar poesias ou contos, compartilhar leituras favoritas, escrever textos e finalizar com um lanche ou chá. 
+        Benefícios: incentiva a leitura, desenvolve a escrita e expressão oral, e valoriza a literatura e a cultura.
+    </p>
+
+    <h2>Veja como é o nosso Chá Literário:</h2>
+</div>
+
+<div class="video-container">
+    <video controls>
+        <source src="https://github.com/matheusmaximo2906-hub/p-ginaD-vila/raw/refs/heads/main/AQOO-Kw86LIa3ZwMo5jldM2O-OJRA6RZXt2oNMe05rN639FB8e72nmIu8EsjemDEOYt3ruulsFcIqpLtIBC4B1KXDA3I9W8H.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div class="info-frame">
+    <p><strong>Voz de fundo do vídeo:</strong> Professora Bianca de Português, que comanda a Imprensa Jovem.</p>
+    <p><strong>Professora apresentada no vídeo:</strong> Professora Márcia de Leitura, que comanda a AEL.</p>
 </div>
 
 <script>
@@ -89,4 +151,3 @@ setInterval(criarEmoji, 400);
 
 </body>
 </html>
-

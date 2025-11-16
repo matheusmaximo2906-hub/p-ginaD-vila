@@ -63,19 +63,14 @@
     @keyframes rainbowLaranja {
         0% { color: #ff7a00; }
         20% { color: #ff8c1a; }
-        40% { color: #ff9f33; }
+        40% { color: #ffa233; }
         60% { color: #ffb24d; }
         80% { color: #ff8c1a; }
         100% { color: #ff7a00; }
     }
 
-    .ael {
-        animation: rainbowPreto 3s linear infinite;
-    }
-
-    .imprensa {
-        animation: rainbowLaranja 3s linear infinite;
-    }
+    .ael { animation: rainbowPreto 3s linear infinite; }
+    .imprensa { animation: rainbowLaranja 3s linear infinite; }
 
     .menu {
         text-align: center;
@@ -162,8 +157,12 @@
         min-width: 300px;
     }
 
-    .tca-images img {
+    .tca-images img,
+    .tca-images video {
         width: 100%;
+        height: auto;
+        max-height: 420px;
+        object-fit: cover;
         border-radius: 14px;
         box-shadow: 0 3px 12px rgba(0,0,0,0.3);
         margin-bottom: 15px;
@@ -206,6 +205,7 @@
 <body>
 
 <div class="top-header">
+
     <img src="https://github.com/matheusmaximo2906-hub/p-ginaD-vila/blob/main/aelksks.jpg?raw=true">
 
     <div class="title-box">
@@ -257,7 +257,7 @@
             </p>
 
             <p>
-                Com uma infraestrutura completa, a escola conta com parque infantil, quadras de esportes cobertas e descobertas, além de um pátio coberto que permite atividades ao ar livre. A biblioteca com sala de leitura oferece um espaço para incentivar a leitura e o aprendizado. Os alunos ainda desfrutam de uma alimentação escolar nutritiva, com cozinha e refeitório. Além disso, a escola disponibiliza acesso à tecnologia, com internet banda larga e um laboratório de informática e até um laboratório de ciências, promovendo um ensino que integra inovação e conhecimento.
+                Com uma infraestrutura completa, a escola conta com parque infantil, quadras de esportes cobertas e descobertas, além de um pátio coberto que permite atividades ao ar livre. A biblioteca com sala de leitura oferece um espaço para incentivar a leitura e o aprendizado. Os alunos ainda desfrutam de uma alimentação escolar nutritiva, com cozinha e refeitório. Além disso, a escola disponibiliza acesso à tecnologia, com internet banda larga, laboratório de informática e um laboratório de ciências, promovendo ensino que integra inovação e conhecimento.
                 A EMEF Professor Antônio D'Ávila foi inaugurada em 17 de abril de 1996 e hoje conta com 29 anos de história.
             </p>
 
@@ -268,10 +268,10 @@
             </p>
 
             <p>
-                Os estudantes analisam situações reais, identificam problemas e propõem soluções criativas e viáveis. É um trabalho que desenvolve pensamento crítico, incentiva a colaboração entre os colegas e fortalece a autonomia de cada aluno. Além disso, promove o protagonismo juvenil e incentiva a participação ativa na sociedade.
+                Os estudantes analisam situações reais, identificam problemas e propõem soluções criativas e viáveis. É um trabalho que desenvolve pensamento crítico, incentiva a colaboração entre os colegas e fortalece a autonomia de cada aluno.
             </p>
 
-            <p><strong>Este ano, nossa escola realizou o TCA — e foi uma experiência incrível! Diversos alunos apresentaram observações do bairro Cidade Tiradentes e como os cidadãos que moram no bairro poderiam ajudar a aprimorar o bairro com campanhas e bastante pedido de justiça por parte dos moradores da regiâo.</strong></p>
+            <p><strong>Este ano, nossa escola realizou o TCA — e foi uma experiência incrível! Diversos alunos fizeram observações no bairro Cidade Tiradentes, propondo melhorias, campanhas e pedidos de justiça junto à comunidade.</strong></p>
 
         </div>
 
@@ -282,7 +282,7 @@
 
             <img src="https://github.com/matheusmaximo2906-hub/p-ginaD-vila/blob/main/IMPRENSA%20JOVEM%20T%C3%81%20ON%20%F0%9F%93%A2%20No%20s%C3%A1bado%20(08-11),%20os%20professores%20e%20a%20gest%C3%A3o%20de%20nossa%20escola%20acompanhar%20(1).webp?raw=true">
 
-            <video controls style="width:100%; border-radius:14px; box-shadow:0 3px 12px rgba(0,0,0,0.3); margin-top:15px;">
+            <video controls>
                 <source src="https://github.com/matheusmaximo2906-hub/p-ginaD-vila/raw/refs/heads/main/IMPRENSA%20JOVEM%20T%C3%81%20ON%20%F0%9F%93%A2%20No%20s%C3%A1bado%20(08-11),%20os%20professores%20e%20a%20gest%C3%A3o%20de%20nossa%20escola%20acompanhara.mp4" type="video/mp4">
             </video>
 

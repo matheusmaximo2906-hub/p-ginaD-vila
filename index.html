@@ -12,7 +12,6 @@
         background: #f0f2f5;
     }
 
-    /* ===== HEADER ===== */
     header {
         background: linear-gradient(135deg, #4e73df, #1cc88a);
         padding: 25px;
@@ -24,13 +23,11 @@
     .logo-escola {
         font-size: 32px;
         font-weight: 700;
-        letter-spacing: 1px;
         text-transform: uppercase;
     }
 
-    /* ===== CONTAINER ===== */
     .container {
-        max-width: 1000px;
+        max-width: 1100px;
         margin: 40px auto;
         background: white;
         padding: 25px;
@@ -49,12 +46,11 @@
         line-height: 1.6;
     }
 
-    /* ===== BOTÕES DECORATIVOS ===== */
     .botoes {
         display: flex;
         justify-content: center;
         gap: 15px;
-        margin: 20px 0;
+        margin: 25px 0;
         flex-wrap: wrap;
     }
 
@@ -62,11 +58,11 @@
         padding: 12px 22px;
         background: #4e73df;
         color: white;
-        border-radius: 8px;
-        font-size: 16px;
+        border-radius: 10px;
         cursor: pointer;
         box-shadow: 0px 4px 10px #0004;
         transition: 0.3s;
+        font-size: 16px;
     }
 
     .botao:hover {
@@ -74,7 +70,7 @@
         transform: scale(1.05);
     }
 
-    /* ===== INSTAGRAM CARDS ===== */
+    /* INSTAGRAM */
     .insta-box {
         margin-top: 30px;
         padding: 20px;
@@ -107,12 +103,33 @@
         margin-right: 15px;
     }
 
-    .insta-name {
-        font-size: 18px;
-        font-weight: 600;
+    /* ===== TCA SECTION ===== */
+    .tca-section {
+        display: flex;
+        gap: 25px;
+        margin-top: 40px;
+        align-items: flex-start;
+        flex-wrap: wrap;
     }
 
-    /* ===== CRÉDITOS ===== */
+    .tca-texto {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .tca-imagem {
+        flex: 1;
+        min-width: 300px;
+        cursor: pointer;
+    }
+
+    .tca-imagem img {
+        width: 100%;
+        border-radius: 14px;
+        box-shadow: 0px 6px 14px #00000035;
+    }
+
+    /* CRÉDITOS */
     .creditos-box {
         margin: 40px auto;
         max-width: 900px;
@@ -123,7 +140,6 @@
         box-shadow: 0px 6px 14px #00000035;
         font-size: 20px;
         font-weight: bold;
-        color: white;
         animation: rainbow 3s linear infinite;
     }
 
@@ -148,18 +164,20 @@
 
 <div class="container">
 
-    <h2>Bem-vindos à página da Sala de Leitura!</h2>
+    <h2>Bem-vindos à Sala de Leitura!</h2>
 
     <p>
         A Sala de Leitura da EMEF Prof. Antônio D'Ávila promove projetos, saraus, chás literários, 
-        rodas de leitura, clubes e ações culturais que incentivam nossos alunos a lerem e aprender cada vez mais.
+        rodas de leitura, clubes e ações culturais que incentivam nossos alunos a lerem cada vez mais.
         <br><br>
         Atualmente, temos continuidade de duas turmas de 1º ano, duas de 2º ano,
         duas de 3º ano, duas de 4º ano, duas de 5º ano, duas de 6º ano,
         duas de 7º ano, duas de 8º ano e duas de 9º ano.
+        <br><br>
+        📌 <b>Este ano também tivemos o TCA (Trabalho Colaborativo de Autoria) dos nonos anos, e foi um sucesso!</b>
     </p>
 
-    <!-- BOTÕES DECORATIVOS -->
+    <!-- BOTÕES -->
     <div class="botoes">
         <div class="botao">Alunos Leitores</div>
         <div class="botao">Mediadores</div>
@@ -172,24 +190,44 @@
     <div class="insta-box">
         <h2>Instagram</h2>
 
-        <!-- PERFIL 1 -->
-        <div class="insta-card" onclick="window.open('https://www.instagram.com/imprensajovem_antonio_davila?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==')">
+        <div class="insta-card" onclick="window.open('https://www.instagram.com/imprensajovem_antonio_davila')">
             <img class="insta-logo-img" src="https://png.pngtree.com/element_our/sm/20180630/sm_5b37de3263964.jpg">
             <div class="insta-name">@imprensajovem_antonio_davila</div>
         </div>
 
-        <!-- PERFIL 2 -->
-        <div class="insta-card" onclick="window.open('https://www.instagram.com/ael_walcyr_carrasco?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==')">
+        <div class="insta-card" onclick="window.open('https://www.instagram.com/ael_walcyr_carrasco')">
             <img class="insta-logo-img" src="https://png.pngtree.com/element_our/sm/20180630/sm_5b37de3263964.jpg">
             <div class="insta-name">@ael_walcyr_carrasco</div>
         </div>
     </div>
 
+    <!-- SEÇÃO TCA -->
+    <div class="tca-section">
+
+        <div class="tca-texto">
+            <h2>O que é o TCA?</h2>
+            <p>
+                O TCA (Trabalho Colaborativo de Autoria) é desenvolvido pelos estudantes do 
+                7º ao 9º ano. Ele incentiva a pesquisa, a investigação, a crítica, a autonomia 
+                e a criação de projetos voltados para problemas sociais e comunitários.
+                <br><br>
+                Os estudantes analisam situações reais do território onde vivem, identificam 
+                problemas e criam propostas de transformação social.
+                <br><br>
+                É um trabalho que promove protagonismo, colaboração e a construção de um mundo melhor.
+            </p>
+        </div>
+
+        <div class="tca-imagem" onclick="window.open('https://www.instagram.com/p/DRAKlgHkoN1/?img_index=1')">
+            <img src="https://i.imgur.com/6YVzz8K.jpeg">
+        </div>
+
+    </div>
+
 </div>
 
-<!-- CRÉDITOS -->
 <div class="creditos-box">
-    Créditos: Matheus Henrique da Silva Máximo e Professora Márcia de Leitura
+    Créditos: Matheus Henrique da Silva Máximo
 </div>
 
 </body>

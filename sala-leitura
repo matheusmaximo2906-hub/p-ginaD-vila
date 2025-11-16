@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Sala de Leitura - EMEF Prof. Antônio D'Ávila</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-image: url('https://img.freepik.com/vetores-premium/bem-vindo-de-volta-ao-design-de-plano-de-fundo-da-escola-com-espaco-de-copia-para-adicionar-conceito-de-texto-de-quadro-de-escola-de-educacao-com-coisas-diferentes_178156-1049.jpg');
+        background-size: cover;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.85);
+        padding: 30px;
+        margin: 40px auto;
+        max-width: 900px;
+        border-radius: 15px;
+        box-shadow: 0px 0px 10px #00000050;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 32px;
+        color: #4b0082;
+        text-shadow: 1px 1px 2px #ffffff;
+    }
+
+    h2 {
+        color: #5a0ea1;
+        margin-top: 30px;
+    }
+
+    p {
+        line-height: 1.6;
+        font-size: 16px;
+    }
+
+    .tca-img {
+        width: 100%;
+        margin-top: 10px;
+        border-radius: 10px;
+    }
+
+    .buttons {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .buttons button {
+        padding: 12px 20px;
+        margin: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        background: #6a0dad;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        transition: 0.3s;
+    }
+
+    .buttons button:hover {
+        background: #520a89;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Sala de Leitura – EMEF Prof. Antônio D'Ávila</h1>
+
+    <h2>O Ensino Integral na EMEF Antônio D’Ávila</h2>
+    <p>
+        A EMEF Prof. Antonio D’Ávila, atendendo à portaria 7464 de dezembro de 2015, 
+        implementou a educação integral com os 1º anos, atendendo em 2016 cinquenta alunos.
+        Em 2017, continuou com duas turmas de 2º ano e duas novas de 1º ano.  
+        Atualmente, temos continuidade de duas turmas de 3º ano, duas de 2º ano e duas de 1º ano.
+    </p>
+
+    <h2>Conceito de Educação Integral e o Currículo da Cidade</h2>
+    <p>
+        O Currículo da Cidade orienta-se pela Educação Integral, promovendo desenvolvimento 
+        intelectual, físico, social, emocional e cultural, formando sujeitos de direitos e deveres.  
+        Busca desenvolver todo o potencial dos estudantes para que se realizem como pessoas, profissionais 
+        e cidadãos comprometidos com o bem-estar, a humanidade e o planeta.
+    </p>
+
+    <h2>Na EMEF Prof. Antônio D’Ávila, Educação Integral significa…</h2>
+    <p>
+        Garantia do direito à cidadania e oferta de experiências que desenvolvem crianças e jovens em suas múltiplas dimensões.  
+        Não se trata apenas de ampliar o tempo na escola, mas de formar o ser integral.  
+        Os projetos oferecidos ampliam o desenvolvimento multidimensional dos estudantes, como:
+        Academia Estudantil de Letras, Monitores de Leitura, Xadrez, Voleibol e Italiano.
+    </p>
+
+    <h2>No Ciclo de Alfabetização – Territórios do Saber</h2>
+    <p>
+        De acordo com a portaria 7464, é possível expandir o currículo do Ciclo de Alfabetização através
+        dos Territórios do Saber, incluindo Comunicação, Oralidade e Novas Linguagens.  
+        Isso permitiu integrar o projeto Monitores de Leitura ao Ensino Integral, envolvendo alunos do ciclo Autoral.  
+        Projetos como Higiene Bucal, Alimentação Saudável, Alfabetização com Jogos, Xadrez, Mediação de Leitura, 
+        Brincadeiras em inglês, Corpo em Movimento e Arte fazem parte desse território.  
+        Há também participação da Academia Estudantil de Letras no eixo de Contação de Histórias.
+    </p>
+
+    <h2>TCA – Trabalho Colaborativo de Autoria (9º anos – 2025)</h2>
+    <p>
+        Este ano tivemos os TCAs dos 9º anos, com temas muito importantes, incluindo combate à violência 
+        e combate à fome na região da Cidade Tiradentes – Zona Leste de São Paulo.  
+        Os trabalhos foram criativos, críticos e mostraram grande consciência social por parte dos alunos.
+    </p>
+
+    <img class="tca-img" src="https://www.instagram.com/p/DRAKlgHkoN1/?img_index=1">
+    <img class="tca-img" src="https://emefarturneiva.wordpress.com/wp-content/uploads/2015/03/tca.jpg?w=300&h=158">
+
+    <div class="buttons">
+        <button>Apresentações</button>
+        <button>Chás Literários</button>
+        <button>Acadêmicos</button>
+    </div>
+
+</div>
+
+</body>
+</html>

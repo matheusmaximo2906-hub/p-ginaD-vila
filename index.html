@@ -107,12 +107,26 @@
         box-shadow: 0 3px 14px rgba(0,0,0,0.25);
     }
 
+    /* AQUI: INSTAGRAM RAINBOW */
     .instagram-section {
         text-align: center;
         font-size: 22px;
         font-weight: bold;
         margin-bottom: 25px;
-        color: #3753d8;
+
+        background: linear-gradient(
+            90deg,
+            red, orange, yellow, green, cyan, blue, purple, red
+        );
+        background-size: 400%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: rainbowMove 4s linear infinite;
+    }
+
+    @keyframes rainbowMove {
+        0% { background-position: 0%; }
+        100% { background-position: 400%; }
     }
 
     .insta-box {
@@ -225,17 +239,14 @@
     <a href="nada.html">Alunos Leitores</a>
     <a href="nada.html">Mediadores</a>
     <a href="nada.html">Projetos</a>
-
-    <!-- BOTÃO CORRETO -->
     <a href="cha-literario.html">Chá Literário</a>
-
     <a href="nada.html">Sarau</a>
     <a href="nada.html">TCA´s</a>
 </div>
 
 <div class="container">
 
-    <div class="instagram-section">Instagram</div>
+    <div class="instagram-section">Instagram 📸</div>
 
     <a href="https://www.instagram.com/imprensajovem_antonio_davila" target="_blank" style="text-decoration:none; color:black;">
         <div class="insta-box">

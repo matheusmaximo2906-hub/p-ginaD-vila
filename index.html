@@ -2,210 +2,194 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sala de Leitura – EMEF Prof. Antônio D'Ávila</title>
 
 <style>
     body {
         margin: 0;
-        font-family: 'Segoe UI', Arial, sans-serif;
-        background: linear-gradient(135deg, #ede7ff, #f8f4ff);
-        background-attachment: fixed;
+        font-family: "Poppins", sans-serif;
+        background: #f0f2f5;
     }
 
+    /* ===== HEADER ===== */
     header {
+        background: linear-gradient(135deg, #4e73df, #1cc88a);
+        padding: 25px;
+        color: white;
         text-align: center;
-        padding: 40px 20px;
+        box-shadow: 0px 4px 10px #0003;
     }
 
-    .logo {
-        width: 120px;
-        margin-bottom: 10px;
-    }
-
-    h1 {
-        font-size: 34px;
-        color: #1e1e8f;
+    .logo-escola {
+        font-size: 32px;
         font-weight: 700;
-        margin: 0;
+        letter-spacing: 1px;
+        text-transform: uppercase;
     }
 
-    /* ESTILO DOS BOTÕES DO INSTAGRAM */
-    .insta-btn {
-        margin-top: 15px;
-        background: #ffffff;
-        border: 2px solid #d6249f;
-        padding: 10px 18px;
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        border-radius: 12px;
-        font-size: 15px;
-        cursor: pointer;
-        transition: 0.3s;
-        box-shadow: 0px 4px 10px #00000020;
-        font-weight: 600;
-    }
-
-    .insta-btn:hover {
-        transform: scale(1.05);
-        background: #ffe6f5;
-    }
-
-    .insta-logo {
-        width: 22px;
-        height: 22px;
-    }
-
+    /* ===== CONTAINER ===== */
     .container {
-        background: white;
-        padding: 35px;
+        max-width: 1000px;
         margin: 40px auto;
-        max-width: 900px;
-        border-radius: 18px;
-        box-shadow: 0px 8px 18px #00000020;
-        animation: fadeIn 0.5s ease;
+        background: white;
+        padding: 25px;
+        border-radius: 16px;
+        box-shadow: 0px 6px 20px #00000025;
     }
 
     h2 {
-        color: #1f1fa9;
-        margin-top: 30px;
-        margin-bottom: 10px;
+        color: #4e73df;
+        text-align: center;
+        margin-bottom: 20px;
     }
 
     p {
+        font-size: 18px;
         line-height: 1.6;
-        font-size: 16px;
-        color: #333;
     }
 
-    .tca-card {
-        background: #f0eaff;
-        padding: 20px;
-        border-radius: 15px;
-        margin-top: 20px;
-        text-align: center;
-        box-shadow: 0px 4px 10px #00000015;
+    /* ===== BOTÕES DECORATIVOS ===== */
+    .botoes {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 20px 0;
+        flex-wrap: wrap;
     }
 
-    .tca-card button {
-        margin-top: 12px;
-        padding: 10px 18px;
-        border: none;
+    .botao {
+        padding: 12px 22px;
+        background: #4e73df;
+        color: white;
         border-radius: 8px;
-        background: #5b18d6;
-        color: white;
-        font-size: 15px;
+        font-size: 16px;
         cursor: pointer;
+        box-shadow: 0px 4px 10px #0004;
         transition: 0.3s;
     }
 
-    .tca-card button:hover {
-        background: #440ba8;
+    .botao:hover {
+        background: #3458c0;
+        transform: scale(1.05);
     }
 
-    .buttons {
-        margin-top: 40px;
-        text-align: center;
+    /* ===== INSTAGRAM CARDS ===== */
+    .insta-box {
+        margin-top: 30px;
+        padding: 20px;
+        background: #fafafa;
+        border-radius: 14px;
+        border: 2px solid #ececec;
     }
 
-    .buttons button {
-        padding: 14px 22px;
-        margin: 10px;
-        font-size: 17px;
-        cursor: pointer;
-        background: #6a0dad;
-        color: white;
-        border: none;
+    .insta-card {
+        display: flex;
+        align-items: center;
+        background: white;
+        padding: 15px;
         border-radius: 12px;
+        box-shadow: 0px 4px 12px #00000015;
+        margin-top: 12px;
+        cursor: pointer;
         transition: 0.3s;
-        box-shadow: 0px 4px 10px #00000025;
     }
 
-    .buttons button:hover {
-        background: #520a89;
-        transform: translateY(-3px);
+    .insta-card:hover {
+        transform: scale(1.02);
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+    .insta-logo {
+        width: 45px;
+        height: 45px;
+        background: radial-gradient(circle at 30% 30%, #ffdf00, #ff0080, #8a00ff);
+        border-radius: 50%;
+        margin-right: 15px;
+    }
+
+    .insta-name {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    /* ===== CRÉDITOS ===== */
+    .creditos-box {
+        margin: 40px auto;
+        max-width: 900px;
+        padding: 20px;
+        background: #ffa54c;
+        border-radius: 14px;
+        text-align: center;
+        box-shadow: 0px 6px 14px #00000035;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        animation: rainbow 3s linear infinite;
+    }
+
+    @keyframes rainbow {
+        0% { color: red; }
+        16% { color: orange; }
+        32% { color: yellow; }
+        48% { color: green; }
+        64% { color: blue; }
+        80% { color: indigo; }
+        100% { color: violet; }
     }
 </style>
 </head>
+
 <body>
 
 <header>
-    <img class="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAQlBMVEUAAAD///+SkpKZmZmkpKTT09PV1dWenp6ioqKnp6eysrK6urrw8PDh4eHi4uLr6+vj4+Pp6enFxcWhob8qKiuu9dBbAAABXklEQVR4nO3aS47CMBAGYCcNgnP9r2c2hv+bTQ6n/2VhbAUSILNrzsxP+VJTFBgAAAAAAAAAAAAAAAMAJ2fGLwRoTSNP9T8gNTYHkREflJA5oAgN88SaG7SspvGf+Z6dDzWTQWLUdr/S4ZWo+HzjNwOcjixI9bMaGfbbpg5q3B8SDfZkOwJrTq4j4smwT4NCRvDF3y9fH4vEF93vENd8g1+/wF13y9PwE13yNf6fd+zSyY5cHAHnYygbglCAHnY0gbglCAHnYygbglCAHnY0gbglCAHnYygbglCAHnY0gbglCAHnYygbglCAHnY0gbglCAHnYygbglCAHnY0gbglCAHnYygbglCAHnY0gbglCAHnYygbglCAHnYygbglCAHnY0gbglCAHnYygbglCAHnY0gbglC+wK4QAQAAAAAAAMD/AP4BJw0HzJt6dkQAAAAASUVORK5CYII=">
-
-    <h1>Sala de Leitura – EMEF Prof. Antônio D'Ávila</h1>
-
-    <!-- BOTÕES NOVOS DO INSTAGRAM -->
-    <button class="insta-btn"
-        onclick="window.open('https://www.instagram.com/imprensajovem_antonio_davila?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==')">
-        <img class="insta-logo" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
-        @imprensajovem_antonio_davila
-    </button>
-
-    <button class="insta-btn"
-        onclick="window.open('https://www.instagram.com/ael_walcyr_carrasco?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==')">
-        <img class="insta-logo" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
-        @ael_walcyr_carrasco
-    </button>
+    <div class="logo-escola">EMEF Prof. Antônio D'Ávila</div>
+    <h1>Sala de Leitura</h1>
 </header>
 
 <div class="container">
 
-    <h2>O Ensino Integral na EMEF Antônio D’Ávila</h2>
+    <h2>Bem-vindos à Sala de Leitura!</h2>
+
     <p>
-        A EMEF Prof. Antonio D’Ávila, atendendo à portaria 7464 de dezembro de 2015, 
-        implementou a educação integral com os 1º anos, atendendo no ano de 2016 cinquenta alunos.
-        Atualmente, temos continuidade de duas turmas de 1º ano, duas de 2º ano, duas de 3º ano,
-        duas de 4º ano, duas de 5º ano, duas de 6º ano, duas de 7º ano, duas de 8º ano e duas de 9º ano.
+        A Sala de Leitura da EMEF Prof. Antônio D'Ávila promove projetos, saraus, chás literários, 
+        rodas de leitura, clubes e ações culturais que incentivam nossos alunos a lerem cada vez mais.
+        <br><br>
+        Atualmente, temos continuidade de duas turmas de 1º ano, duas de 2º ano,
+        duas de 3º ano, duas de 4º ano, duas de 5º ano, duas de 6º ano,
+        duas de 7º ano, duas de 8º ano e duas de 9º ano.
     </p>
 
-    <h2>Conceito de Educação Integral e o Currículo da Cidade</h2>
-    <p>
-        O Currículo da Cidade orienta-se pela Educação Integral, promovendo o desenvolvimento intelectual, 
-        físico, social, emocional e cultural dos estudantes, formando sujeitos de direitos e deveres.
-    </p>
-
-    <h2>Na EMEF Prof. Antônio D’Ávila, Educação Integral significa…</h2>
-    <p>
-        Garantir cidadania, oferecer experiências que desenvolvam os estudantes em suas múltiplas dimensões 
-        e ampliar o aprendizado por meio de projetos como Academia Estudantil de Letras, Monitores de Leitura,
-        Xadrez, Voleibol e Italiano.
-    </p>
-
-    <h2>No Ciclo de Alfabetização – Territórios do Saber</h2>
-    <p>
-        O Ensino Integral amplia o currículo com projetos como Higiene Bucal, Alimentação Saudável,
-        Alfabetização com Jogos, Xadrez, Mediação de Leitura, Informática, Brincadeiras em Inglês,
-        Corpo em Movimento e Arte.  
-    </p>
-
-    <h2>TCA – Trabalho Colaborativo de Autoria (9º anos – 2025)</h2>
-    <p>
-        Este ano, os TCA´s abordaram temas como combate à violência e combate à fome na Cidade Tiradentes 
-        – Zona Leste de São Paulo, mostrando grande consciência social dos estudantes.
-    </p>
-
-    <div class="tca-card">
-        <h3>Ver TCA no Instagram</h3>
-        <button onclick="window.open('https://www.instagram.com/p/DRAKlgHkoN1/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==')">
-            Abrir Post
-        </button>
+    <!-- BOTÕES DECORATIVOS -->
+    <div class="botoes">
+        <div class="botao">Alunos Leitores</div>
+        <div class="botao">Mediadores</div>
+        <div class="botao">Projetos</div>
+        <div class="botao">Chás Literários</div>
+        <div class="botao">Sarau</div>
     </div>
 
-    <br>
+    <!-- INSTAGRAM -->
+    <div class="insta-box">
+        <h2>Instagram</h2>
 
-    <img class="tca-img" src="https://emefarturneiva.wordpress.com/wp-content/uploads/2015/03/tca.jpg?w=300&h=158" style="width:100%; border-radius:10px;">
+        <!-- PERFIL 1 -->
+        <div class="insta-card" onclick="window.open('https://www.instagram.com/imprensajovem_antonio_davila?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==')">
+            <div class="insta-logo"></div>
+            <div class="insta-name">@imprensajovem_antonio_davila</div>
+        </div>
 
-    <div class="buttons">
-        <button>Apresentações</button>
-        <button>Chás Literários</button>
-        <button>Acadêmicos</button>
+        <!-- PERFIL 2 -->
+        <div class="insta-card" onclick="window.open('https://www.instagram.com/ael_walcyr_carrasco?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==')">
+            <div class="insta-logo"></div>
+            <div class="insta-name">@ael_walcyr_carrasco</div>
+        </div>
     </div>
 
+</div>
+
+<!-- CRÉDITOS -->
+<div class="creditos-box">
+    Créditos: Matheus Henrique da Silva Máximo
 </div>
 
 </body>

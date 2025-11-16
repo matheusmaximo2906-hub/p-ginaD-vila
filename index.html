@@ -42,7 +42,6 @@
     .title-box h1 {
         font-size: 33px;
         margin: 0;
-        color: #1e3dd6;
         font-weight: bold;
     }
 
@@ -50,6 +49,34 @@
         font-size: 22px;
         margin: 5px 0 0;
         color: #333;
+    }
+
+    /* Rainbow de tons escuros (preto → cinzas → preto) */
+    @keyframes rainbowPreto {
+        0% { color: #000000; }
+        20% { color: #1a1a1a; }
+        40% { color: #333333; }
+        60% { color: #4d4d4d; }
+        80% { color: #1a1a1a; }
+        100% { color: #000000; }
+    }
+
+    /* Rainbow laranja */
+    @keyframes rainbowLaranja {
+        0% { color: #ff7a00; }
+        20% { color: #ff8c1a; }
+        40% { color: #ff9f33; }
+        60% { color: #ffb24d; }
+        80% { color: #ff8c1a; }
+        100% { color: #ff7a00; }
+    }
+
+    .ael {
+        animation: rainbowPreto 3s linear infinite;
+    }
+
+    .imprensa {
+        animation: rainbowLaranja 3s linear infinite;
     }
 
     .menu {
@@ -184,7 +211,10 @@
     <img src="https://github.com/matheusmaximo2906-hub/p-ginaD-vila/blob/main/imprensa.jpg?raw=true">
 
     <div class="title-box">
-        <h1>AEL Walcyr Carrasco | Imprensa Jovem</h1>
+        <h1>
+            <span class="ael">AEL Walcyr Carrasco</span> |
+            <span class="imprensa">Imprensa Jovem</span>
+        </h1>
         <h2>Sala de Leitura – EMEF Prof. Antônio D’Ávila</h2>
     </div>
 
@@ -253,6 +283,12 @@
             <img src="https://github.com/matheusmaximo2906-hub/p-ginaD-vila/blob/main/IMPRENSA%20JOVEM%20T%C3%81%20ON%20%F0%9F%93%A2%20No%20s%C3%A1bado%20(08-11),%20os%20professores%20e%20a%20gest%C3%A3o%20de%20nossa%20escola%20acompanhar.webp?raw=true">
 
             <img src="https://github.com/matheusmaximo2906-hub/p-ginaD-vila/blob/main/IMPRENSA%20JOVEM%20T%C3%81%20ON%20%F0%9F%93%A2%20No%20s%C3%A1bado%20(08-11),%20os%20professores%20e%20a%20gest%C3%A3o%20de%20nossa%20escola%20acompanhar%20(1).webp?raw=true">
+
+            <!-- VIDEO ADICIONADO -->
+            <video controls style="width:100%; border-radius:14px; box-shadow:0 3px 12px rgba(0,0,0,0.3); margin-top:15px;">
+                <source src="https://github.com/matheusmaximo2906-hub/p-ginaD-vila/raw/refs/heads/main/IMPRENSA%20JOVEM%20T%C3%81%20ON%20%F0%9F%93%A2%20No%20s%C3%A1bado%20(08-11),%20os%20professores%20e%20a%20gest%C3%A3o%20de%20nossa%20escola%20acompanhara.mp4" type="video/mp4">
+            </video>
+
         </div>
 
     </div>

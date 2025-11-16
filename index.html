@@ -2,48 +2,78 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Sala de Leitura - EMEF Prof. Antônio D'Ávila</title>
+<title>Sala de Leitura – EMEF Prof. Antônio D'Ávila</title>
 
 <style>
     body {
         margin: 0;
-        font-family: Arial, sans-serif;
-        background-image: url('https://img.freepik.com/vetores-premium/bem-vindo-de-volta-ao-design-de-plano-de-fundo-da-escola-com-espaco-de-copia-para-adicionar-conceito-de-texto-de-quadro-de-escola-de-educacao-com-coisas-diferentes_178156-1049.jpg');
-        background-size: cover;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: linear-gradient(135deg, #ede7ff, #f8f4ff);
         background-attachment: fixed;
-        background-repeat: no-repeat;
     }
 
-    .container {
-        background: rgba(255, 255, 255, 0.85);
-        padding: 30px;
-        margin: 40px auto;
-        max-width: 900px;
-        border-radius: 15px;
-        box-shadow: 0px 0px 10px #00000050;
+    header {
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .logo {
+        width: 120px;
+        margin-bottom: 10px;
     }
 
     h1 {
-        text-align: center;
-        font-size: 32px;
-        color: #4b0082;
-        text-shadow: 1px 1px 2px #ffffff;
+        font-size: 34px;
+        color: #1e1e8f;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .container {
+        background: white;
+        padding: 35px;
+        margin: 40px auto;
+        max-width: 900px;
+        border-radius: 18px;
+        box-shadow: 0px 8px 18px #00000020;
+        animation: fadeIn 0.5s ease;
     }
 
     h2 {
-        color: #5a0ea1;
+        color: #1f1fa9;
         margin-top: 30px;
+        margin-bottom: 10px;
     }
 
     p {
         line-height: 1.6;
         font-size: 16px;
+        color: #333;
     }
 
-    .tca-img {
-        width: 100%;
-        margin-top: 10px;
-        border-radius: 10px;
+    .tca-card {
+        background: #f0eaff;
+        padding: 20px;
+        border-radius: 15px;
+        margin-top: 20px;
+        text-align: center;
+        box-shadow: 0px 4px 10px #00000015;
+    }
+
+    .tca-card button {
+        margin-top: 12px;
+        padding: 10px 18px;
+        border: none;
+        border-radius: 8px;
+        background: #5b18d6;
+        color: white;
+        font-size: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .tca-card button:hover {
+        background: #440ba8;
     }
 
     .buttons {
@@ -52,72 +82,82 @@
     }
 
     .buttons button {
-        padding: 12px 20px;
+        padding: 14px 22px;
         margin: 10px;
-        font-size: 16px;
+        font-size: 17px;
         cursor: pointer;
         background: #6a0dad;
         color: white;
         border: none;
-        border-radius: 10px;
+        border-radius: 12px;
         transition: 0.3s;
+        box-shadow: 0px 4px 10px #00000025;
     }
 
     .buttons button:hover {
         background: #520a89;
+        transform: translateY(-3px);
     }
 
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
 </style>
 </head>
 <body>
 
-<div class="container">
-
+<header>
+    <img class="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAQlBMVEUAAAD///+SkpKZmZmkpKTT09PV1dWenp6ioqKnp6eysrK6urrw8PDh4eHi4uLr6+vj4+Pp6enFxcWhob8qKiuu9dBbAAABXklEQVR4nO3aS47CMBAGYCcNgnP9r2c2hv+bTQ6n/2VhbAUSILNrzsxP+VJTFBgAAAAAAAAAAAAAAAMAJ2fGLwRoTSNP9T8gNTYHkREflJA5oAgN88SaG7SspvGf+Z6dDzWTQWLUdr/S4ZWo+HzjNwOcjixI9bMaGfbbpg5q3B8SDfZkOwJrTq4j4smwT4NCRvDF3y9fH4vEF93vENd8g1+/wF13y9PwE13yNf6fd+zSyY5cHAHnYygbglCAHnY0gbglCAHnYygbglCAHnY0gbglCAHnYygbglCAHnY0gbglCAHnYygbglCAHnY0gbglCAHnYygbglCAHnY0gbglCAHnYygbglCAHnY0gbglCAHnYygbglCAHnYygbglCAHnY0gbglCAHnYygbglCAHnY0gbglC+wK4QAQAAAAAAAMD/AP4BJw0HzJt6dkQAAAAASUVORK5CYII=">
     <h1>Sala de Leitura – EMEF Prof. Antônio D'Ávila</h1>
+</header>
+
+<div class="container">
 
     <h2>O Ensino Integral na EMEF Antônio D’Ávila</h2>
     <p>
         A EMEF Prof. Antonio D’Ávila, atendendo à portaria 7464 de dezembro de 2015, 
-        implementou a educação integral com os 1º anos, atendendo em 2016 cinquenta alunos.
-        Em 2017, continuou com duas turmas de 2º ano e duas novas de 1º ano.  
-        Atualmente, temos continuidade de duas turmas de 3º ano, duas de 2º ano e duas de 1º ano.
+        implementou a educação integral com os 1º anos, atendendo no ano de 2016 cinquenta alunos.
+        Atualmente, temos continuidade de duas turmas de 1º ano, duas de 2º ano, duas de 3º ano,
+        duas de 4º ano, duas de 5º ano, duas de 6º ano, duas de 7º ano, duas de 8º ano e duas de 9º ano.
     </p>
 
     <h2>Conceito de Educação Integral e o Currículo da Cidade</h2>
     <p>
-        O Currículo da Cidade orienta-se pela Educação Integral, promovendo desenvolvimento 
-        intelectual, físico, social, emocional e cultural, formando sujeitos de direitos e deveres.  
-        Busca desenvolver todo o potencial dos estudantes para que se realizem como pessoas, profissionais 
-        e cidadãos comprometidos com o bem-estar, a humanidade e o planeta.
+        O Currículo da Cidade orienta-se pela Educação Integral, promovendo o desenvolvimento intelectual, 
+        físico, social, emocional e cultural dos estudantes, formando sujeitos de direitos e deveres.
     </p>
 
     <h2>Na EMEF Prof. Antônio D’Ávila, Educação Integral significa…</h2>
     <p>
-        Garantia do direito à cidadania e oferta de experiências que desenvolvem crianças e jovens em suas múltiplas dimensões.  
-        Não se trata apenas de ampliar o tempo na escola, mas de formar o ser integral.  
-        Os projetos oferecidos ampliam o desenvolvimento multidimensional dos estudantes, como:
-        Academia Estudantil de Letras, Monitores de Leitura, Xadrez, Voleibol e Italiano.
+        Garantir cidadania, oferecer experiências que desenvolvam os estudantes em suas múltiplas dimensões 
+        e ampliar o aprendizado por meio de projetos como Academia Estudantil de Letras, Monitores de Leitura,
+        Xadrez, Voleibol e Italiano.
     </p>
 
     <h2>No Ciclo de Alfabetização – Territórios do Saber</h2>
     <p>
-        De acordo com a portaria 7464, é possível expandir o currículo do Ciclo de Alfabetização através
-        dos Territórios do Saber, incluindo Comunicação, Oralidade e Novas Linguagens.  
-        Isso permitiu integrar o projeto Monitores de Leitura ao Ensino Integral, envolvendo alunos do ciclo Autoral.  
-        Projetos como Higiene Bucal, Alimentação Saudável, Alfabetização com Jogos, Xadrez, Mediação de Leitura, 
-        Brincadeiras em inglês, Corpo em Movimento e Arte fazem parte desse território.  
-        Há também participação da Academia Estudantil de Letras no eixo de Contação de Histórias.
+        O Ensino Integral amplia o currículo com projetos como Higiene Bucal, Alimentação Saudável,
+        Alfabetização com Jogos, Xadrez, Mediação de Leitura, Informática, Brincadeiras em Inglês,
+        Corpo em Movimento e Arte.  
     </p>
 
     <h2>TCA – Trabalho Colaborativo de Autoria (9º anos – 2025)</h2>
     <p>
-        Este ano tivemos os TCAs dos 9º anos, com temas muito importantes, incluindo combate à violência 
-        e combate à fome na região da Cidade Tiradentes – Zona Leste de São Paulo.  
-        Os trabalhos foram criativos, críticos e mostraram grande consciência social por parte dos alunos.
+        Este ano, os TCAs abordaram temas como combate à violência e combate à fome na Cidade Tiradentes 
+        – Zona Leste de São Paulo, mostrando grande consciência social dos estudantes.
     </p>
 
-    <img class="tca-img" src="https://www.instagram.com/p/DRAKlgHkoN1/?img_index=1">
-    <img class="tca-img" src="https://emefarturneiva.wordpress.com/wp-content/uploads/2015/03/tca.jpg?w=300&h=158">
+    <div class="tca-card">
+        <h3>Ver TCA no Instagram</h3>
+        <button onclick="window.open('https://www.instagram.com/p/DRAKlgHkoN1/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==')">
+            Abrir Post
+        </button>
+    </div>
+
+    <br>
+
+    <img class="tca-img" src="https://emefarturneiva.wordpress.com/wp-content/uploads/2015/03/tca.jpg?w=300&h=158" style="width:100%; border-radius:10px;">
 
     <div class="buttons">
         <button>Apresentações</button>

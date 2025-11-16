@@ -25,6 +25,18 @@
         text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
     }
 
+    .aviso {
+        max-width: 900px;
+        margin: 30px auto;
+        background: rgba(255, 50, 90, 0.9);
+        color: white;
+        padding: 20px;
+        border-radius: 14px;
+        font-size: 18px;
+        font-weight: bold;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+    }
+
     .container {
         max-width: 900px;
         margin: 40px auto;
@@ -85,6 +97,12 @@
 </head>
 <body>
 
+<header>Doe à um Hospital de Amor!</header>
+
+<div class="aviso">
+    Chave PIX copiada para a área de transferência! Agora, abra o seu banco e transfira para contribuir e ajudar mais pessoas no mundo!
+</div>
+
 <div class="container">
     <p><strong>Sobre o Hospital de Amor:</strong></p>
     <p>
@@ -94,7 +112,7 @@
 
     <p><strong>Como você pode ajudar:</strong></p>
     <div class="pix-box">
-        <p>Doe para o Hospital!</p>
+        <p>Você pode contribuir com o <strong>Hospital</strong> e contribuir com o <strong>mundo</strong> e com <strong>vidas de pessoas</strong>, basta copiar e enviar qualquer quantia que você tiver para o <strong>Pix</strong> abaixo!</p>
         <p><strong>Chave PIX:</strong> meuapoio@hospitaldeamor.com.br</p>
         <button onclick="copiarPIX()">Copiar Chave PIX</button>
     </div>
@@ -105,9 +123,7 @@
 <script>
 function copiarPIX() {
     const chave = "meuapoio@hospitaldeamor.com.br";
-    navigator.clipboard.writeText(chave).then(() => {
-        alert("Chave PIX copiada para a área de transferência! Agora, abra o seu banco e transfira para contribuir e ajudar mais pessoas no mundo!");
-    });
+    navigator.clipboard.writeText(chave);
 }
 </script>
 

@@ -1,237 +1,103 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>AEL Walcyr Carrasco | Imprensa Jovem</title>
-
 <style>
-    body {
-        font-family: Arial, sans-serif;
+    :root{
+        --accent:#1e3dd6;
+        --orange:#ff7a00;
+    }
+    body{
+        font-family: Arial, Helvetica, sans-serif;
         background: url('https://static.vecteezy.com/system/resources/previews/011/154/633/non_2x/back-to-school-background-free-vector.jpg') no-repeat center/cover fixed;
-        margin: 0;
-        padding: 0;
+        margin:0;
+        padding:0;
+        -webkit-font-smoothing:antialiased;
     }
 
-    /* ======= TOPO ======= */
-    .top-header {
-        background: rgba(255,255,255,0.88);
-        padding: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 25px;
-        border-bottom: 3px solid #1e3dd6;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    .top-header{
+        background:rgba(255,255,255,0.9);
+        padding:18px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:22px;
+        border-bottom:3px solid var(--accent);
+        box-shadow:0 2px 8px rgba(0,0,0,0.18);
+    }
+    .top-header img.logo{ width:110px; height:110px; border-radius:12px; object-fit:cover; box-shadow:0 3px 10px rgba(0,0,0,0.18);}
+    .title-box { text-align:center; max-width:640px; }
+    .title-box h1{ margin:0; font-size:28px; font-weight:700; line-height:1.05; }
+    .title-box h1 .ael{ display:inline-block; animation:rainbowBlack 3s linear infinite; }
+    .title-box h1 .imprensa{ display:inline-block; animation:rainbowOrange 3s linear infinite; }
+    @keyframes rainbowBlack{ 0%{color:#000}50%{color:#3a3a3a}100%{color:#000} }
+    @keyframes rainbowOrange{ 0%{color:var(--orange)}50%{color:#ffb36a}100%{color:var(--orange)} }
+
+    .sala-animada{ font-size:18px; margin-top:6px; animation:pretoLaranja 2s infinite;}
+    @keyframes pretoLaranja{ 0%{color:#000}50%{color:var(--orange)}100%{color:#000} }
+
+    .menu{ text-align:center; margin-top:18px; padding:12px 6px; }
+    .menu a{ background:var(--accent); color:#fff; padding:10px 18px; border-radius:14px; margin:6px; display:inline-block; text-decoration:none; font-weight:700; box-shadow:0 6px 14px rgba(0,0,0,0.12); transition:transform .18s, background .18s;}
+    .menu a:hover{ transform:translateY(-3px); background:#1531aa; }
+
+    .container{
+        max-width:980px;
+        margin:28px auto;
+        background:rgba(255,255,255,0.95);
+        padding:26px;
+        border-radius:14px;
+        box-shadow:0 6px 20px rgba(0,0,0,0.12);
     }
 
-    .top-header img {
-        width: 110px;
-        height: 110px;
-        border-radius: 14px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    .instagram-section{ text-align:center; font-size:22px; font-weight:800; margin-bottom:14px; background:linear-gradient(90deg,red,orange,yellow,green,cyan,blue,purple); -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:move 4s linear infinite; background-size:400%; }
+    @keyframes move{ 0%{background-position:0%} 100%{background-position:400%} }
+
+    .insta-box{ width:85%; margin:0 auto 10px; display:flex; align-items:center; gap:12px; background:#fafafa; padding:12px; border-radius:12px; box-shadow:0 4px 14px rgba(0,0,0,0.06); text-decoration:none; color:#000;}
+    .insta-box img{ width:34px; height:34px; }
+
+    .tca-section{ display:flex; gap:24px; flex-wrap:wrap; margin-top:28px; align-items:flex-start; }
+    .tca-text{ flex:1; min-width:300px; font-size:16.5px; line-height:1.65; color:#222; }
+    .tca-images{ flex:1; min-width:300px; }
+    .tca-title{ text-align:center; font-size:20px; color:var(--accent); font-weight:800; margin-bottom:14px; }
+
+    .tca-images img, .tca-images video{ width:100%; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.18); margin-bottom:14px; display:block; max-height:420px; object-fit:cover; }
+
+    .creditos-box{ margin:28px auto; max-width:940px; padding:16px; background:#ffa54c; color:#fff; border-radius:12px; font-weight:700; text-align:center; box-shadow:0 6px 18px rgba(0,0,0,0.18); }
+    .direitos-box{ width:100%; background:var(--orange); color:#fff; padding:16px; text-align:center; font-weight:700; margin-top:18px; box-shadow:0 6px 18px rgba(0,0,0,0.14); }
+
+    /* pequenas melhorias mobile */
+    @media (max-width:720px){
+        .top-header{ flex-direction:column; gap:12px; padding:14px; }
+        .title-box h1{ font-size:22px; }
+        .menu a{ padding:10px 14px; font-size:15px; border-radius:12px; }
+        .container{ margin:16px; padding:18px; }
     }
 
-    .title-box {
+    /* mensagem visível quando uma mídia falha */
+    .media-fallback {
+        border: 2px dashed #e2e2e2;
+        padding: 12px;
+        border-radius: 10px;
         text-align: center;
-    }
-
-    .title-box h1 {
-        font-size: 34px;
-        margin: 0;
-        font-weight: bold;
-    }
-
-    @keyframes pretoLaranja {
-        0%   { color: black; }
-        50%  { color: orange; }
-        100% { color: black; }
-    }
-
-    .sala-animada {
-        animation: pretoLaranja 2s infinite;
-        font-size: 22px;
-    }
-
-    @keyframes rainbowPreto {
-        0% { color: #000000; }
-        50% { color: #3a3a3a; }
-        100% { color: #000000; }
-    }
-
-    @keyframes rainbowLaranja {
-        0% { color: #ff7a00; }
-        50% { color: #ffb24d; }
-        100% { color: #ff7a00; }
-    }
-
-    .ael { animation: rainbowPreto 3s linear infinite; }
-    .imprensa { animation: rainbowLaranja 3s linear infinite; }
-
-    /* ======= MENU ======= */
-    .menu {
-        text-align: center;
-        margin-top: 20px;
-        padding: 10px;
-    }
-
-    .menu a {
-        background: #1e3dd6;
-        padding: 12px 22px;
-        margin: 6px;
-        color: #fff;
-        border-radius: 16px;
-        font-size: 17px;
-        font-weight: bold;
-        text-decoration: none;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-        transition: 0.3s;
-        display: inline-block;
-    }
-
-    .menu a:hover {
-        background: #1531aa;
-        transform: scale(1.07);
-    }
-
-    /* ======= CONTEÚDO ======= */
-    .container {
-        max-width: 980px;
-        margin: 35px auto;
-        background: rgba(255, 255, 255, 0.93);
-        padding: 30px;
-        border-radius: 16px;
-        box-shadow: 0 3px 14px rgba(0,0,0,0.25);
-    }
-
-    /* INSTAGRAM */
-    .instagram-section {
-        font-size: 24px;
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 25px;
-        background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, purple, red);
-        background-size: 400%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: rainbowMove 3s linear infinite;
-    }
-
-    @keyframes rainbowMove {
-        0% { background-position: 0%; }
-        100% { background-position: 400%; }
-    }
-
-    .insta-box {
-        display: flex;
-        align-items: center;
-        background: #fafafa;
-        padding: 15px;
-        border-radius: 12px;
-        width: 85%;
-        margin: 0 auto 12px auto;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-        transition: 0.2s;
-    }
-
-    .insta-box:hover { background: #f0f0f0; }
-
-    .insta-box img {
-        width: 35px;
-        margin-right: 12px;
-    }
-
-    /* ======= TCA ======= */
-    .tca-section {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 25px;
-        margin-top: 40px;
-    }
-
-    .tca-text {
-        flex: 1;
-        min-width: 300px;
-        font-size: 18px;
-        line-height: 1.6;
-        color: #333;
-    }
-
-    .tca-images {
-        flex: 1;
-        min-width: 300px;
-    }
-
-    .tca-images img, .tca-images video {
-        width: 100%;
-        border-radius: 14px;
-        box-shadow: 0 3px 12px rgba(0,0,0,0.35);
-        margin-bottom: 18px;
-    }
-
-    .tca-title {
-        text-align: center;
-        font-size: 24px;
-        font-weight: 700;
-        color: #3753d8;
-        margin-bottom: 18px;
-    }
-
-    /* ======= CRÉDITOS ======= */
-    .creditos-box {
-        max-width: 950px;
-        margin: 40px auto;
-        padding: 20px;
-        background: #ffa54c;
-        color: white;
-        border-radius: 14px;
-        text-align: center;
-        font-size: 20px;
-        font-weight: bold;
-        animation: rainbow 3s linear infinite;
-        box-shadow: 0px 6px 14px rgba(0,0,0,0.4);
-    }
-
-    @keyframes rainbow {
-        0% { color: red; }
-        25% { color: yellow; }
-        50% { color: lime; }
-        75% { color: cyan; }
-        100% { color: red; }
-    }
-
-    /* ======= RODAPÉ ======= */
-    .direitos-box {
-        background: #ff7a00;
-        padding: 18px;
-        text-align: center;
-        color: white;
-        font-size: 18px;
-        font-weight: bold;
-        width: 100%;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.25);
-        margin-top: 20px;
+        color: #666;
+        font-weight:700;
+        background: linear-gradient(180deg, #fff, #fbfbfb);
     }
 </style>
 </head>
 <body>
 
-<!-- ======= TOPO ======= -->
 <div class="top-header">
-    <img src="https://raw.githubusercontent.com/matheusmaximo2906-hub/p-ginaD-vila/main/aelksks.jpg">
-
+    <img class="logo" id="logoLeft" alt="AEL logo" src="https://raw.githubusercontent.com/matheusmaximo2906-hub/p-ginaD-vila/main/aelksks.jpg">
     <div class="title-box">
-        <h1>
-            <span class="ael">AEL Walcyr Carrasco</span> |
-            <span class="imprensa">Imprensa Jovem</span>
-        </h1>
-        <h2 class="sala-animada">Sala de Leitura – EMEF Prof. Antônio D’Ávila</h2>
+        <h1><span class="ael">AEL Walcyr Carrasco</span> | <span class="imprensa">Imprensa Jovem</span></h1>
+        <div class="sala-animada">Sala de Leitura – EMEF Prof. Antônio D’Ávila</div>
     </div>
-
-    <img src="https://raw.githubusercontent.com/matheusmaximo2906-hub/p-ginaD-vila/main/imprensa.jpg">
+    <img class="logo" id="logoRight" alt="Imprensa logo" src="https://raw.githubusercontent.com/matheusmaximo2906-hub/p-ginaD-vila/main/imprensa.jpg">
 </div>
 
-<!-- ======= MENU ======= -->
 <div class="menu">
     <a href="nada.html">Alunos Leitores</a>
     <a href="nada.html">Mediadores</a>
@@ -242,31 +108,22 @@
     <a href="doacao.html">Doação para Hospital de Amor ❤️🩹</a>
 </div>
 
-<!-- ======= CONTEÚDO ======= -->
 <div class="container">
-
     <div class="instagram-section">Instagram</div>
 
-    <a href="https://www.instagram.com/imprensajovem_antonio_davila" target="_blank" style="color:black;text-decoration:none;">
-        <div class="insta-box">
-            <img src="https://cdn-icons-png.flaticon.com/512/5968/5968776.png">
-            @imprensajovem_antonio_davila
-        </div>
+    <a class="insta-box" href="https://www.instagram.com/imprensajovem_antonio_davila" target="_blank" rel="noopener">
+        <img alt="instagram" src="https://cdn-icons-png.flaticon.com/512/5968/5968776.png">
+        <div>@imprensajovem_antonio_davila</div>
     </a>
 
-    <a href="https://www.instagram.com/ael_walcyr_carrasco" target="_blank" style="color:black;text-decoration:none;">
-        <div class="insta-box">
-            <img src="https://cdn-icons-png.flaticon.com/512/5968/5968776.png">
-            @ael_walcyr_carrasco
-        </div>
+    <a class="insta-box" href="https://www.instagram.com/ael_walcyr_carrasco" target="_blank" rel="noopener">
+        <img alt="instagram" src="https://cdn-icons-png.flaticon.com/512/5968/5968776.png">
+        <div>@ael_walcyr_carrasco</div>
     </a>
 
-    <!-- ======= TCA ======= -->
     <div class="tca-section">
-
         <div class="tca-text">
             <h2>Quem somos nós?</h2>
-
             <p>A Escola Municipal de Ensino Fundamental Antônio D'Ávila, localizada em São Paulo, no bairro Conjunto Habitacional Santa Etelvina II, é uma instituição de ensino que visa oferecer um ambiente de aprendizado acessível e de qualidade. Com um endereço fácil de encontrar na Igarapé Água Azul, 1259, a escola atende tantos os anos iniciais quanto os finais do ensino fundamental.</p>
 
             <p>Com uma infraestrutura completa, a escola conta com parque infantil, quadra coberta, pátio amplo, biblioteca com sala de leitura, laboratório de informática, laboratório de ciências e refeitório. A EMEF Professor Antônio D'Ávila foi inaugurada em 17 de abril de 1996 e hoje conta com 29 anos de história.</p>
@@ -283,26 +140,135 @@
         <div class="tca-images">
             <div class="tca-title">Veja como é o TCA da nossa escola:</div>
 
-            <img src="https://raw.githubusercontent.com/matheusmaximo2906-hub/p-ginaD-vila/main/TCA1.webp">
-            <img src="https://raw.githubusercontent.com/matheusmaximo2906-hub/p-ginaD-vila/main/TCA2.webp">
+            <!-- imagem 1: tenta github raw, se falhar cai para fallback -->
+            <img id="imgTCA1" alt="TCA imagem 1"
+                 src="https://raw.githubusercontent.com/matheusmaximo2906-hub/p-ginaD-vila/main/TCA1.webp"
+                 onerror="handleImageError(this, 'https://i.imgur.com/IR0Vj2P.jpeg')">
 
-            <video controls>
-                <source src="https://raw.githubusercontent.com/matheusmaximo2906-hub/p-ginaD-vila/main/TCA-VIDEO.mp4" type="video/mp4">
-            </video>
+            <!-- imagem 2 -->
+            <img id="imgTCA2" alt="TCA imagem 2"
+                 src="https://raw.githubusercontent.com/matheusmaximo2906-hub/p-ginaD-vila/main/TCA2.webp"
+                 onerror="handleImageError(this, 'https://i.imgur.com/2n8Yw7Y.jpeg')">
+
+            <!-- vídeo: tenta github raw; se falhar, trocamos para um iframe YouTube de fallback -->
+            <div id="videoWrapper">
+                <video id="tcaVideo" controls playsinline preload="metadata">
+                    <source id="videoSrc1" src="https://raw.githubusercontent.com/matheusmaximo2906-hub/p-ginaD-vila/main/TCA-VIDEO.mp4" type="video/mp4">
+                    Seu navegador não suporta vídeo em HTML5.
+                </video>
+                <div id="videoFallbackMsg" style="display:none;margin-top:10px;" class="media-fallback">
+                    Não foi possível reproduzir o vídeo local — carregando alternativa.
+                </div>
+            </div>
         </div>
-
     </div>
 </div>
 
-<!-- ======= CRÉDITOS ======= -->
 <div class="creditos-box">
     Créditos: Professora Márcia de Leitura e Matheus Henrique da Silva Máximo - EMEF Professor Antônio D'Ávila
 </div>
 
-<!-- ======= RODAPÉ ======= -->
 <div class="direitos-box">
     Escola Municipal de Ensino Fundamental (EMEF) Professor Antônio D'Ávila — Direitos Reservados.
 </div>
 
+<script>
+/*
+  Lógica de fallback:
+  - imagens: se onerror disparar, troca para URL alternativa (Imgur)
+  - vídeo: escuta erro e substitui por iframe do YouTube (fallback). Também faz tentativa de recarregar 1 vez.
+*/
+
+function handleImageError(imgEl, fallbackUrl){
+    console.warn('Imagem falhou, aplicando fallback:', imgEl.id, fallbackUrl);
+    try{
+        if(imgEl.dataset.fallbackApplied === '1') return;
+        imgEl.dataset.fallbackApplied = '1';
+        imgEl.src = fallbackUrl;
+    }catch(e){ console.error(e); }
+}
+
+/* Vídeo fallback */
+const video = document.getElementById('tcaVideo');
+const videoSrc = document.getElementById('videoSrc1');
+const videoWrapper = document.getElementById('videoWrapper');
+const videoFallbackMsg = document.getElementById('videoFallbackMsg');
+
+let triedReload = false;
+
+video.addEventListener('error', function(e){
+    console.warn('Erro ao carregar vídeo local:', e);
+    attemptVideoFallback();
+});
+
+// também detecta falha de carregamento do source via fetch de HEAD (mais robusto)
+function checkVideoHead(url, successCb, failCb){
+    fetch(url, { method:'HEAD', mode:'cors' }).then(r=>{
+        if(r.ok){ successCb(); } else { failCb(); }
+    }).catch(err=>{
+        failCb();
+    });
+}
+
+function attemptVideoFallback(){
+    if(triedReload){
+        // já tentou recarregar, agora troca para iframe
+        replaceVideoWithIframe();
+        return;
+    }
+    triedReload = true;
+    videoFallbackMsg.style.display = 'block';
+
+    // tenta uma vez recarregar (pode ser um problema temporário)
+    setTimeout(()=>{
+        video.load();
+        video.play().catch(()=>{ replaceVideoWithIframe(); });
+        // adicional: checa HEAD do arquivo raw do github, se falhar substitui
+        checkVideoHead(videoSrc.src, ()=>{ console.log('HEAD OK, mantendo vídeo'); }, ()=>{ replaceVideoWithIframe(); });
+    }, 800);
+}
+
+function replaceVideoWithIframe(){
+    // remove element video e coloca iframe do YouTube (fallback)
+    const fallbackYouTubeId = '4X2k2hL4D2Q'; // exemplo genérico — você pode trocar pelo seu vídeo do YouTube
+    const iframe = document.createElement('iframe');
+    iframe.width = '100%';
+    iframe.height = '340';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+    iframe.src = 'https://www.youtube.com/embed/' + fallbackYouTubeId + '?rel=0';
+    // limpa wrapper e insere iframe + mensagem
+    videoWrapper.innerHTML = '';
+    const info = document.createElement('div');
+    info.className = 'media-fallback';
+    info.style.marginBottom = '10px';
+    info.textContent = 'O vídeo hospedado não pôde ser reproduzido — alternativa do YouTube carregada.';
+    videoWrapper.appendChild(info);
+    videoWrapper.appendChild(iframe);
+}
+
+/* Opcional: detecta imagens que ficaram em branco (alguns navegadores não disparam onerror) */
+window.addEventListener('load', ()=>{
+    document.querySelectorAll('img').forEach(img=>{
+        // se width/height 0 ou naturalWidth 0 => erro
+        if((img.naturalWidth === 0 || img.complete === false) && !img.dataset.fallbackApplied){
+            // aplica fallback automatico com base no id
+            if(img.id === 'imgTCA1'){
+                handleImageError(img, 'https://i.imgur.com/IR0Vj2P.jpeg');
+            } else if(img.id === 'imgTCA2'){
+                handleImageError(img, 'https://i.imgur.com/2n8Yw7Y.jpeg');
+            } else if(img.id === 'logoLeft' || img.id === 'logoRight'){
+                handleImageError(img, 'https://i.imgur.com/2n8Yw7Y.jpeg');
+            } else {
+                // genérico
+                handleImageError(img, 'https://i.imgur.com/2n8Yw7Y.jpeg');
+            }
+        }
+    });
+
+    // Se vídeo não pode ser reproduzido logo, testamos com HEAD
+    checkVideoHead(document.getElementById('videoSrc1').src, ()=>{ console.log('Video raw ok'); }, ()=>{ attemptVideoFallback(); });
+});
+</script>
 </body>
 </html>

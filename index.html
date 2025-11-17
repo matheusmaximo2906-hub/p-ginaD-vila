@@ -8,23 +8,21 @@
 <style>
     body {
         font-family: Arial, sans-serif;
-        background: url('https://static.vecteezy.com/system/resources/previews/011/154/633/non_2x/back-to-school-background-free-vector.jpg');
-        background-size: cover;
-        background-attachment: fixed;
-        background-repeat: no-repeat;
+        background: url('https://static.vecteezy.com/system/resources/previews/011/154/633/non_2x/back-to-school-background-free-vector.jpg') no-repeat center/cover fixed;
         margin: 0;
         padding: 0;
     }
 
+    /* ======= TOPO ======= */
     .top-header {
-        background: rgba(255,255,255,0.85);
+        background: rgba(255,255,255,0.88);
         padding: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 25px;
         border-bottom: 3px solid #1e3dd6;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
     }
 
     .top-header img {
@@ -39,7 +37,7 @@
     }
 
     .title-box h1 {
-        font-size: 33px;
+        font-size: 34px;
         margin: 0;
         font-weight: bold;
     }
@@ -52,53 +50,42 @@
 
     .sala-animada {
         animation: pretoLaranja 2s infinite;
-    }
-
-    .title-box h2 {
         font-size: 22px;
-        margin: 5px 0 0;
-        font-weight: bold;
     }
 
     @keyframes rainbowPreto {
         0% { color: #000000; }
-        20% { color: #1a1a1a; }
-        40% { color: #333333; }
-        60% { color: #4d4d4d; }
-        80% { color: #1a1a1a; }
+        50% { color: #3a3a3a; }
         100% { color: #000000; }
     }
 
     @keyframes rainbowLaranja {
         0% { color: #ff7a00; }
-        20% { color: #ff8c1a; }
-        40% { color: #ffa233; }
-        60% { color: #ffb24d; }
-        80% { color: #ff8c1a; }
+        50% { color: #ffb24d; }
         100% { color: #ff7a00; }
     }
 
     .ael { animation: rainbowPreto 3s linear infinite; }
     .imprensa { animation: rainbowLaranja 3s linear infinite; }
 
+    /* ======= MENU ======= */
     .menu {
         text-align: center;
         margin-top: 20px;
+        padding: 10px;
     }
 
     .menu a {
         background: #1e3dd6;
-        border: none;
         padding: 12px 22px;
         margin: 6px;
         color: #fff;
         border-radius: 16px;
         font-size: 17px;
         font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.25);
         text-decoration: none;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+        transition: 0.3s;
         display: inline-block;
     }
 
@@ -107,25 +94,27 @@
         transform: scale(1.07);
     }
 
+    /* ======= CONTEÚDO ======= */
     .container {
-        max-width: 950px;
-        margin: 30px auto;
-        background: rgba(255, 255, 255, 0.9);
-        padding: 25px;
-        border-radius: 14px;
+        max-width: 980px;
+        margin: 35px auto;
+        background: rgba(255, 255, 255, 0.93);
+        padding: 30px;
+        border-radius: 16px;
         box-shadow: 0 3px 14px rgba(0,0,0,0.25);
     }
 
+    /* INSTAGRAM */
     .instagram-section {
-        text-align: center;
-        font-size: 22px;
+        font-size: 24px;
         font-weight: bold;
+        text-align: center;
         margin-bottom: 25px;
         background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, purple, red);
         background-size: 400%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        animation: rainbowMove 4s linear infinite;
+        animation: rainbowMove 3s linear infinite;
     }
 
     @keyframes rainbowMove {
@@ -137,37 +126,35 @@
         display: flex;
         align-items: center;
         background: #fafafa;
-        padding: 14px;
+        padding: 15px;
         border-radius: 12px;
-        margin: 10px auto;
         width: 85%;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        cursor: pointer;
+        margin: 0 auto 12px auto;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
         transition: 0.2s;
     }
 
     .insta-box:hover { background: #f0f0f0; }
 
     .insta-box img {
-        width: 34px;
-        height: 34px;
+        width: 35px;
         margin-right: 12px;
     }
 
+    /* ======= TCA ======= */
     .tca-section {
         display: flex;
-        margin-top: 40px;
-        gap: 25px;
-        align-items: flex-start;
         flex-wrap: wrap;
+        gap: 25px;
+        margin-top: 40px;
     }
 
     .tca-text {
         flex: 1;
-        font-size: 17px;
+        min-width: 300px;
+        font-size: 18px;
         line-height: 1.6;
         color: #333;
-        min-width: 300px;
     }
 
     .tca-images {
@@ -177,61 +164,59 @@
 
     .tca-images img, .tca-images video {
         width: 100%;
-        height: auto;
-        max-height: 420px;
-        object-fit: cover;
         border-radius: 14px;
-        box-shadow: 0 3px 12px rgba(0,0,0,0.3);
-        margin-bottom: 15px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.35);
+        margin-bottom: 18px;
     }
 
     .tca-title {
-        font-size: 22px;
-        font-weight: bold;
-        color: #3753d8;
-        margin-bottom: 15px;
         text-align: center;
+        font-size: 24px;
+        font-weight: 700;
+        color: #3753d8;
+        margin-bottom: 18px;
     }
 
+    /* ======= CRÉDITOS ======= */
     .creditos-box {
+        max-width: 950px;
         margin: 40px auto;
-        max-width: 900px;
         padding: 20px;
         background: #ffa54c;
+        color: white;
         border-radius: 14px;
         text-align: center;
-        box-shadow: 0px 6px 14px rgba(0,0,0,0.35);
         font-size: 20px;
         font-weight: bold;
         animation: rainbow 3s linear infinite;
-        color: white;
+        box-shadow: 0px 6px 14px rgba(0,0,0,0.4);
     }
 
     @keyframes rainbow {
         0% { color: red; }
-        16% { color: orange; }
-        32% { color: yellow; }
-        48% { color: green; }
-        64% { color: blue; }
-        80% { color: indigo; }
-        100% { color: violet; }
+        25% { color: yellow; }
+        50% { color: lime; }
+        75% { color: cyan; }
+        100% { color: red; }
     }
 
+    /* ======= RODAPÉ ======= */
     .direitos-box {
-        width: 100%;
         background: #ff7a00;
         padding: 18px;
         text-align: center;
+        color: white;
         font-size: 18px;
         font-weight: bold;
-        color: white;
-        margin-top: 20px;
+        width: 100%;
         box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+        margin-top: 20px;
     }
 </style>
 </head>
 <body>
 
+<!-- ======= TOPO ======= -->
 <div class="top-header">
     <img src="https://raw.githubusercontent.com/matheusmaximo2906-hub/p-ginaD-vila/main/aelksks.jpg">
 
@@ -246,6 +231,7 @@
     <img src="https://raw.githubusercontent.com/matheusmaximo2906-hub/p-ginaD-vila/main/imprensa.jpg">
 </div>
 
+<!-- ======= MENU ======= -->
 <div class="menu">
     <a href="nada.html">Alunos Leitores</a>
     <a href="nada.html">Mediadores</a>
@@ -256,40 +242,42 @@
     <a href="doacao.html">Doação para Hospital de Amor ❤️🩹</a>
 </div>
 
+<!-- ======= CONTEÚDO ======= -->
 <div class="container">
 
     <div class="instagram-section">Instagram</div>
 
-    <a href="https://www.instagram.com/imprensajovem_antonio_davila" target="_blank" style="text-decoration:none; color:black;">
+    <a href="https://www.instagram.com/imprensajovem_antonio_davila" target="_blank" style="color:black;text-decoration:none;">
         <div class="insta-box">
             <img src="https://cdn-icons-png.flaticon.com/512/5968/5968776.png">
             @imprensajovem_antonio_davila
         </div>
     </a>
 
-    <a href="https://www.instagram.com/ael_walcyr_carrasco" target="_blank" style="text-decoration:none; color:black;">
+    <a href="https://www.instagram.com/ael_walcyr_carrasco" target="_blank" style="color:black;text-decoration:none;">
         <div class="insta-box">
             <img src="https://cdn-icons-png.flaticon.com/512/5968/5968776.png">
             @ael_walcyr_carrasco
         </div>
     </a>
 
+    <!-- ======= TCA ======= -->
     <div class="tca-section">
 
         <div class="tca-text">
             <h2>Quem somos nós?</h2>
 
-            <p>A Escola Municipal de Ensino Fundamental Antônio D'Ávila, localizada em São Paulo, no bairro Conjunto Habitacional Santa Etelvina II, é uma instituição de ensino que visa oferecer um ambiente de aprendizado acessível e de qualidade. Com um endereço fácil de encontrar na Igarapé Água Azul, 1259, a escola atende tanto os anos iniciais quanto os anos finais do ensino fundamental, promovendo a educação de forma presencial e diurna.</p>
+            <p>A Escola Municipal de Ensino Fundamental Antônio D'Ávila, localizada em São Paulo, no bairro Conjunto Habitacional Santa Etelvina II, é uma instituição de ensino que visa oferecer um ambiente de aprendizado acessível e de qualidade. Com um endereço fácil de encontrar na Igarapé Água Azul, 1259, a escola atende tantos os anos iniciais quanto os finais do ensino fundamental.</p>
 
-            <p>Com uma infraestrutura completa, a escola conta com parque infantil, quadra de esportes coberta, além de um pátio coberto que permite atividades ao ar livre. A biblioteca com sala de leitura oferece um espaço para incentivar a leitura e o aprendizado. Os alunos ainda desfrutam de uma alimentação escolar nutritiva, com cozinha e refeitório. Além disso, a escola disponibiliza acesso à tecnologia, com internet banda larga, laboratório de informática e um laboratório de ciências, promovendo ensino que integra inovação e conhecimento. A EMEF Professor Antônio D'Ávila foi inaugurada em 17 de abril de 1996 e hoje conta com 29 anos de história.</p>
+            <p>Com uma infraestrutura completa, a escola conta com parque infantil, quadra coberta, pátio amplo, biblioteca com sala de leitura, laboratório de informática, laboratório de ciências e refeitório. A EMEF Professor Antônio D'Ávila foi inaugurada em 17 de abril de 1996 e hoje conta com 29 anos de história.</p>
 
             <h2>O que é o TCA?</h2>
 
             <p>O TCA (Trabalho Colaborativo de Autoria) incentiva autonomia, pesquisa, criatividade e o protagonismo juvenil. Os alunos analisam situações reais e criam projetos que impactam a sociedade.</p>
 
-            <p>Os estudantes analisam situações reais do bairro, identificam problemas e propõem soluções criativas e funcionais. É um trabalho que desenvolve pensamento crítico, incentiva a colaboração entre os colegas e fortalece a autonomia de cada aluno que está fazendo o projeto de TCA.</p>
+            <p>Os estudantes observam problemas do bairro e propõem soluções criativas. O projeto desenvolve pensamento crítico, colaboração e autonomia.</p>
 
-            <p><strong>Este ano, nossa escola realizou o TCA — e foi uma experiência incrível! Diversos alunos fizeram passeios e gravações no bairro Cidade Tiradentes, localizado em São Paulo na Zona Leste, propondo melhorias, campanhas e pedidos de justiça junto aos moradores da região.</strong></p>
+            <p><strong>Neste ano, a escola realizou o TCA com passeios e gravações no bairro Cidade Tiradentes, onde os alunos registraram problemas, coletaram opiniões e propuseram melhorias reais para os moradores.</strong></p>
         </div>
 
         <div class="tca-images">
@@ -306,10 +294,12 @@
     </div>
 </div>
 
+<!-- ======= CRÉDITOS ======= -->
 <div class="creditos-box">
-    Créditos: Professora Márcia de Leitura e Matheus Henrique da Silva Máximo - Escola Municipal de Ensino Fundamental (EMEF) Professor Antônio D'Ávila
+    Créditos: Professora Márcia de Leitura e Matheus Henrique da Silva Máximo - EMEF Professor Antônio D'Ávila
 </div>
 
+<!-- ======= RODAPÉ ======= -->
 <div class="direitos-box">
     Escola Municipal de Ensino Fundamental (EMEF) Professor Antônio D'Ávila — Direitos Reservados.
 </div>

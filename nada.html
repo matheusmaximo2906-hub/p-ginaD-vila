@@ -54,6 +54,20 @@
         line-height: 1.8;
     }
 
+    .search-box {
+        margin-top: 25px;
+    }
+
+    .search-input {
+        width: 80%;
+        padding: 14px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        font-size: 18px;
+        text-align: center;
+    }
+
     .back-btn {
         margin: 30px auto;
         background: #ffa500;
@@ -72,6 +86,17 @@
         transform: scale(1.05);
     }
 </style>
+
+<script>
+function pesquisarGoogle() {
+    const input = document.getElementById("pesquisa").value.trim();
+    if (input !== "") {
+        const url = "https://www.google.com/search?q=" + encodeURIComponent(input);
+        window.open(url, "_blank");
+    }
+}
+</script>
+
 </head>
 <body>
 
@@ -79,6 +104,13 @@
 
 <div class="container">
     <p>Que tal ver o que há de novo por aí no mundo?</p>
+
+    <!-- 🔍 Caixa de pesquisa -->
+    <div class="search-box">
+        <input type="text" id="pesquisa" class="search-input" placeholder="Pesquisar..." 
+        onkeydown="if(event.key === 'Enter'){ pesquisarGoogle(); }">
+    </div>
+
     <p>Ideia do <strong>Site</strong> criada por <strong>Professora Márcia de Leitura</strong>.</p>
     <p>Site criado por <strong>Matheus Henrique da Silva Máximo</strong>.</p>
 </div>

@@ -85,6 +85,20 @@
         background: #ffb84d;
         transform: scale(1.05);
     }
+
+    /* 🔶 FRAME LARANJA DOS DIREITOS */
+    .direitos-box {
+        width: 100%;
+        background: #ffa500;
+        color: black;
+        padding: 18px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 50px;
+        border-top: 3px solid #ffcc66;
+        box-shadow: 0 -3px 10px rgba(0,0,0,0.4);
+    }
 </style>
 
 <script>
@@ -105,7 +119,6 @@ function pesquisarGoogle() {
 <div class="container">
     <p>Que tal ver o que há de novo por aí no mundo?</p>
 
-    <!-- 🔍 Caixa de pesquisa -->
     <div class="search-box">
         <input type="text" id="pesquisa" class="search-input" placeholder="Pesquisar..." 
         onkeydown="if(event.key === 'Enter'){ pesquisarGoogle(); }">
@@ -117,10 +130,10 @@ function pesquisarGoogle() {
 
 <a href="index.html" class="back-btn">Voltar para a Página Inicial</a>
 
-    <div class="direitos-box">
+<!-- 🔶 FRAME LARANJA -->
+<div class="direitos-box">
     Escola Municipal de Ensino Fundamental (EMEF) Professor Antônio D'Ávila — Direitos Reservados.
 </div>
 
 </body>
 </html>
-

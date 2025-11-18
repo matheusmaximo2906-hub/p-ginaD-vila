@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Doe à um Hospital de Amor!</title>
 
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-database-compat.js"></script>
+
 <style>
     body {
         margin: 0;
@@ -15,7 +19,6 @@
         color: #fff;
         text-align: center;
         overflow-x: hidden;
-        overflow-y: auto;
     }
 
     header {
@@ -35,7 +38,7 @@
         font-size: 18px;
         font-weight: bold;
         box-shadow: 0 3px 10px rgba(0,0,0,0.5);
-        display: none; /* Começa escondido */
+        display: none;
     }
 
     .container {
@@ -77,6 +80,18 @@
         transform: scale(1.05);
     }
 
+    /* contador */
+    .contador {
+        margin-top: 15px;
+        font-size: 20px;
+        font-weight: bold;
+        color: black;
+        background: #ffdf8f;
+        padding: 10px;
+        border-radius: 10px;
+        display: inline-block;
+    }
+
     .back-btn {
         margin: 30px auto;
         background: #ffa500;
@@ -112,7 +127,7 @@
 <body>
 
 <div class="aviso" id="avisoPIX">
-    Chave PIX copiada para a área de transferência! Agora, abra o seu banco e transfira qualquer quantia para contribuir e ajudar mais pessoas que necessitam neste momento no mundo!
+    Chave PIX copiada para a área de transferência! Obrigado por ajudar quem precisa!
 </div>
 
 <div class="container">
@@ -123,31 +138,61 @@
     </p>
 
     <p><strong>Como você pode ajudar:</strong></p>
+
     <div class="pix-box">
-        <p>Você pode contribuir dando qualquer quantia à nós! Nós <strong>sempre iremos ficar gratos</strong> e <strong>as portas estarão sempre abertas para todos que poderem doar qualquer quantia</strong>!</p>
+        <p>Você pode contribuir com qualquer quantia! Toda ajuda faz diferença!</p>
         <p><strong>Chave PIX:</strong> meuapoio@hospitaldeamor.com.br</p>
+
         <button onclick="copiarPIX()">Copiar Chave PIX</button>
+
+        <div class="contador">
+            Pessoas que já doaram: <span id="contadorDoacoes">0</span>
+        </div>
     </div>
 </div>
 
 <a href="index.html" class="back-btn">Voltar para a Página Inicial</a>
 
 <script>
+/* --- CONFIGURAÇÃO DO FIREBASE --- */
+/* Substitua pelos dados do SEU Firebase */
+const firebaseConfig = {
+    apiKey: "COLOQUE_AQUI",
+    authDomain: "COLOQUE_AQUI",
+    databaseURL: "COLOQUE_AQUI",
+    projectId: "COLOQUE_AQUI",
+    storageBucket: "COLOQUE_AQUI",
+    messagingSenderId: "COLOQUE_AQUI",
+    appId: "COLOQUE_AQUI"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+/* --- MOSTRAR CONTADOR EM TEMPO REAL --- */
+db.ref("contadorDoacoes").on("value", snapshot => {
+    const valor = snapshot.val();
+    document.getElementById("contadorDoacoes").innerText = valor ?? 0;
+});
+
+/* --- FUNÇÃO DE COPIAR PIX E SOMAR NO BD --- */
 function copiarPIX() {
     const chave = "meuapoio@hospitaldeamor.com.br";
+
     navigator.clipboard.writeText(chave).then(() => {
-        // Mostrar aviso somente após copiar
-        const aviso = document.getElementById('avisoPIX');
-        aviso.style.display = 'block';
+        // Mostra aviso
+        document.getElementById("avisoPIX").style.display = "block";
+
+        // Somar +1 no Firebase
+        const ref = db.ref("contadorDoacoes");
+        ref.transaction(value => (value || 0) + 1);
     });
 }
 </script>
 
-    <div class="direitos-box">
+<div class="direitos-box">
     Escola Municipal de Ensino Fundamental (EMEF) Professor Antônio D'Ávila e Hospital de Amor — Direitos Reservados.
 </div>
 
 </body>
 </html>
-
-

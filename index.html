@@ -384,23 +384,19 @@
     Escola Municipal de Ensino Fundamental (EMEF) Professor Antônio D'Ávila — Direitos Reservados.
 </div>
 
-<!-- ========================================================= -->
-<!-- === SCRIPT DO FIREBASE + SISTEMA DE REPORTAR COMPLETO === -->
-<!-- ========================================================= -->
-
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 
 <script>
-// COLOQUE SUA CONFIG AQUI
+
 const firebaseConfig = {
-    apiKey: "SUA_API_KEY",
-    authDomain: "SEU_PROJETO.firebaseapp.com",
-    databaseURL: "https://SEU_PROJETO-default-rtdb.firebaseio.com",
-    projectId: "SEU_PROJETO",
-    storageBucket: "SEU_PROJETO.appspot.com",
-    messagingSenderId: "00000000000",
-    appId: "0:00000000000:web:00000000000"
+    apiKey: "AIzaSyCIbOtGxDaYumtHKwFNJwXkGYu9YlkGin8",
+    authDomain: "vererros.firebaseapp.com",
+    databaseURL: "https://vererros-default-rtdb.firebaseio.com",
+    projectId: "vererros",
+    storageBucket: "vererros.firebasestorage.app",
+    messagingSenderId: "1023178128364",
+    appId: "1:1023178128364:web:371ebdac3a3f367b199ec9"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -410,7 +406,6 @@ const input = document.getElementById("reportarInput");
 const botao = document.getElementById("botaoReportar");
 const confirmacao = document.getElementById("confirmacao");
 
-// Mostrar botão apenas depois de ENTER e 6 letras
 input.addEventListener("keyup", function(e) {
     const texto = input.value.trim();
 
@@ -448,5 +443,11 @@ function enviarErro() {
 
 </body>
 </html>
+
+
+
+
+
+
 
 

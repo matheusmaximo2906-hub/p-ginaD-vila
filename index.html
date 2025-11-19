@@ -237,6 +237,66 @@
         box-shadow: 0 3px 10px rgba(0,0,0,0.25);
     }
 
+    .box-reportar {
+    width: 90%;
+    max-width: 500px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.15);
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.box-reportar h3 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 20px;
+}
+
+#reportarInput {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    outline: none;
+    transition: 0.3s;
+}
+
+#reportarInput:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 10px rgba(74,144,226,0.3);
+}
+
+#botaoReportar {
+    display: none;
+    width: 100%;
+    margin-top: 12px;
+    background: #4a90e2;
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#botaoReportar:hover {
+    background: #357acb;
+}
+
+#confirmacao {
+    display: none;
+    margin-top: 15px;
+    color: #2ecc71;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 </style>
 </head>
 
@@ -319,50 +379,27 @@
     </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 
-<script>
+        <div class="box-reportar">
+    <h3>Reportar um erro</h3>
 
-const firebaseConfig = {
-    apiKey: "AIzaSyCIbOtGxDaYumtHKwFNJwXkGYu9YlkGin8",
-    authDomain: "vererros.firebaseapp.com",
-    databaseURL: "vererros",
-    projectId: "vererros",
-    storageBucket: "vererros.firebasestorage.app",
-    messagingSenderId: "1023178128364",
-    appId: "1:1023178128364:web:371ebdac3a3f367b199ec9"
-};
+    <input 
+        type="text" 
+        id="reportarInput" 
+        placeholder="Descreva o erro aqui (mín. 6 letras)...">
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+    <button id="botaoReportar">Reportar Erro ✏️</button>
 
-document.getElementById("reportarInput").addEventListener("input", function() {
-    const texto = this.value.trim();
-    const botao = document.getElementById("botaoReportar");
+    <p id="confirmacao">Erro enviado com sucesso! Estamos gratos e iremos resolver!</p>
+</div>
 
-    if (texto.length >= 6) {
-        botao.style.display = "block";
-    } else {
-        botao.style.display = "none";
-    }
-});
+<div class="creditos-box">
+    Créditos: Professora Márcia de Leitura e Matheus Henrique da Silva Máximo - Escola Municipal de Ensino Fundamental (EMEF) Professor Antônio D'Ávila
+</div>
 
-document.getElementById("botaoReportar").addEventListener("click", function() {
-    const texto = document.getElementById("reportarInput").value.trim();
-    if (texto.length < 6) return;
-
-    db.ref("erros").push({
-        texto: texto,
-        data: new Date().toLocaleString()
-    });
-
-    document.getElementById("reportarInput").value = "";
-    this.style.display = "none";
-    
-    document.getElementById("confirmacao").style.display = "block";
-});
-</script>
+<div class="direitos-box">
+    Escola Municipal de Ensino Fundamental (EMEF) Professor Antônio D'Ávila — Direitos Reservados.
+</div>        
 
 </body>
 </html>
@@ -378,6 +415,8 @@ document.getElementById("botaoReportar").addEventListener("click", function() {
 
 
 
+
+        
 
         
 

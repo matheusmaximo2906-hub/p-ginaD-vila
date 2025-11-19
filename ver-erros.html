@@ -1,36 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Erros do Site <strong>Reportados</strong>:</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ver Erros Reportados</title>
+
 <style>
-body {
-    font-family: Arial;
-    background: #f4f4f4;
-    padding: 20px;
-}
-.box {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f5f9;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 25px;
+    }
+
+    .erro-box {
+        background: white;
+        padding: 15px;
+        margin: 10px auto;
+        width: 95%;
+        max-width: 600px;
+        border-radius: 10px;
+        box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    .texto {
+        font-size: 17px;
+        color: #222;
+        margin-bottom: 8px;
+    }
+
+    .data {
+        font-size: 13px;
+        color: gray;
+    }
+
+    #listaErros {
+        margin-top: 20px;
+    }
+
+    .vazio {
+        text-align: center;
+        color: gray;
+        font-size: 16px;
+    }
 </style>
 </head>
-
 <body>
-<h1>Erros enviados</h1>
-<div id="lista"></div>
+
+<h1>Erros Reportados:</h1>
+
+<div id="listaErros">
+    <p class="vazio">Carregando erros...</p>
+</div>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 
 <script>
+
 const firebaseConfig = {
     apiKey: "AIzaSyCIbOtGxDaYumtHKwFNJwXkGYu9YlkGin8",
     authDomain: "vererros.firebaseapp.com",
-    databaseURL: "https://SEU PROJETO-default-rtdb.firebaseio.com",
+    databaseURL: "https://vererros-default-rtdb.firebaseio.com",
     projectId: "vererros",
     storageBucket: "vererros.firebasestorage.app",
     messagingSenderId: "1023178128364",
@@ -40,35 +77,31 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-db.ref("erros").on("value", snap => {
-    const lista = document.getElementById("lista");
+const lista = document.getElementById("listaErros");
+
+db.ref("erros").on("value", function(snapshot) {
     lista.innerHTML = "";
 
-    snap.forEach(ch => {
-        const e = ch.val();
-        lista.innerHTML += `
-            <div class="box">
-                <strong>Erro:</strong> ${e.texto} <br>
-                <small>${e.data}</small>
-            </div>
+    if (!snapshot.exists()) {
+        lista.innerHTML = '<p class="vazio">Nenhum erro foi reportado ainda.</p>';
+        return;
+    }
+
+    snapshot.forEach(function(child) {
+        const dados = child.val();
+
+        const div = document.createElement("div");
+        div.className = "erro-box";
+
+        div.innerHTML = `
+            <p class="texto"><b>Erro:</b> ${dados.texto}</p>
+            <p class="data">${dados.data}</p>
         `;
+
+        lista.appendChild(div);
     });
 });
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -318,12 +318,12 @@
         </div>
     </div>
 </div>
-<!-- Firebase -->
+
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 
 <script>
-// CONFIG DO FIREBASE
+
 const firebaseConfig = {
     apiKey: "AIzaSyCIbOtGxDaYumtHKwFNJwXkGYu9YlkGin8",
     authDomain: "vererros.firebaseapp.com",
@@ -337,7 +337,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// Mostrar botão só quando tiver 6 letras
 document.getElementById("reportarInput").addEventListener("input", function() {
     const texto = this.value.trim();
     const botao = document.getElementById("botaoReportar");
@@ -349,21 +348,18 @@ document.getElementById("reportarInput").addEventListener("input", function() {
     }
 });
 
-// Enviar para o Firebase
 document.getElementById("botaoReportar").addEventListener("click", function() {
     const texto = document.getElementById("reportarInput").value.trim();
-    if (texto.length < 6) return; // segurança extra
+    if (texto.length < 6) return;
 
     db.ref("erros").push({
         texto: texto,
         data: new Date().toLocaleString()
     });
 
-    // limpar campo e esconder botão
     document.getElementById("reportarInput").value = "";
     this.style.display = "none";
     
-    // mostrar confirmação
     document.getElementById("confirmacao").style.display = "block";
 });
 </script>
@@ -376,5 +372,13 @@ document.getElementById("botaoReportar").addEventListener("click", function() {
 
 
 
+
+
+
+
+
+
+
+        
 
         

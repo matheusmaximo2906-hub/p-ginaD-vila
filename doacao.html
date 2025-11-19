@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Doe à um Hospital de Amor!</title>
 
-<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-database-compat.js"></script>
 
@@ -80,7 +79,6 @@
         transform: scale(1.05);
     }
 
-    /* contador */
     .contador {
         margin-top: 15px;
         font-size: 20px;
@@ -154,36 +152,31 @@
 <a href="index.html" class="back-btn">Voltar para a Página Inicial</a>
 
 <script>
-/* --- CONFIGURAÇÃO DO FIREBASE --- */
-/* Substitua pelos dados do SEU Firebase */
+
 const firebaseConfig = {
-    apiKey: "COLOQUE_AQUI",
-    authDomain: "COLOQUE_AQUI",
-    databaseURL: "COLOQUE_AQUI",
-    projectId: "COLOQUE_AQUI",
-    storageBucket: "COLOQUE_AQUI",
-    messagingSenderId: "COLOQUE_AQUI",
-    appId: "COLOQUE_AQUI"
+    apiKey: "AIzaSyAGSAslA1Nqq82T9Nb6oTNXSyrGyrnWHKU",
+    authDomain: "hospitaldeamor.firebaseapp.com",
+    databaseURL: "hospitaldeamor",
+    projectId: "hospitaldeamor.firebasestorage.app",
+    storageBucket: "446797098852",
+    messagingSenderId: "1:446797098852:web:1349e1407c28fbafea1471",
+    appId: "G-EZKH529HPN"
 };
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* --- MOSTRAR CONTADOR EM TEMPO REAL --- */
 db.ref("contadorDoacoes").on("value", snapshot => {
     const valor = snapshot.val();
     document.getElementById("contadorDoacoes").innerText = valor ?? 0;
 });
 
-/* --- FUNÇÃO DE COPIAR PIX E SOMAR NO BD --- */
 function copiarPIX() {
     const chave = "meuapoio@hospitaldeamor.com.br";
 
     navigator.clipboard.writeText(chave).then(() => {
-        // Mostra aviso
         document.getElementById("avisoPIX").style.display = "block";
 
-        // Somar +1 no Firebase
         const ref = db.ref("contadorDoacoes");
         ref.transaction(value => (value || 0) + 1);
     });

@@ -318,66 +318,12 @@
         </div>
     </div>
 </div>
-<div id="reportar-box" style="
-    background:#fff5d1;
-    padding:20px;
-    border-radius:10px;
-    border-left:6px solid #ffae00;
-    margin:20px 0;
-">
-    <h3>Reportar Erro no Site</h3>
-    <input id="reportarInput" type="text" placeholder="Descreva o erro..." style="
-        width:100%;
-        padding:10px;
-        border-radius:8px;
-        border:2px solid #ffae00;
-        font-size:16px;
-    ">
-    <button id="botaoReportar" style="
-        margin-top:12px;
-        padding:10px;
-        background:#ff8c00;
-        border:none;
-        border-radius:8px;
-        color:white;
-        font-size:16px;
-        cursor:pointer;
-        display:none;
-    ">Enviar Erro</button>
-</div>
-
-<div id="confirmacao" style="
-    display:none;
-    background:#32cd32;
-    padding:15px;
-    text-align:center;
-    color:white;
-    margin-top:20px;
-    border-radius:10px;
-">
-    Erro enviado! Obrigado por ajudar! <br><br>
-    <button onclick="window.location='ver-erros.html'" style="
-        padding:10px 15px;
-        border:none;
-        background:white;
-        color:#32cd32;
-        border-radius:8px;
-        cursor:pointer;
-    ">Ver erros</button>
-</div>
-
-<div class="creditos-box">
-    Créditos: Professora Márcia de Leitura e Matheus Henrique da Silva Máximo - Escola Municipal de Ensino Fundamental (EMEF) Professor Antônio D'Ávila
-</div>
-
-<div class="direitos-box">
-    Escola Municipal de Ensino Fundamental (EMEF) Professor Antônio D'Ávila — Direitos Reservados.
-</div>
-
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 
 <script>
+// CONFIG DO FIREBASE
 const firebaseConfig = {
     apiKey: "SUA API",
     authDomain: "SEU PROJETO.firebaseapp.com",
@@ -391,22 +337,33 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-document.getElementById("reportarInput").addEventListener("input", function(){
-    document.getElementById("botaoReportar").style.display =
-        this.value.trim() !== "" ? "block" : "none";
+// Mostrar botão só quando tiver 6 letras
+document.getElementById("reportarInput").addEventListener("input", function() {
+    const texto = this.value.trim();
+    const botao = document.getElementById("botaoReportar");
+
+    if (texto.length >= 6) {
+        botao.style.display = "block";
+    } else {
+        botao.style.display = "none";
+    }
 });
 
-document.getElementById("botaoReportar").addEventListener("click", function(){
+// Enviar para o Firebase
+document.getElementById("botaoReportar").addEventListener("click", function() {
     const texto = document.getElementById("reportarInput").value.trim();
-    if(texto === "") return;
+    if (texto.length < 6) return; // segurança extra
 
     db.ref("erros").push({
         texto: texto,
         data: new Date().toLocaleString()
     });
 
+    // limpar campo e esconder botão
     document.getElementById("reportarInput").value = "";
     this.style.display = "none";
+    
+    // mostrar confirmação
     document.getElementById("confirmacao").style.display = "block";
 });
 </script>

@@ -87,6 +87,29 @@
         font-weight: bold;
         color: #000;
     }
+
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 12px 22px;
+    background: linear-gradient(45deg, #ffcc00, #ff8800);
+    color: black;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(255, 165, 0, 0.6);
+    transition: 0.25s;
+    text-decoration: none;
+}
+
+.back-button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 25px rgba(255, 165, 0, 0.9);
+}
+
 </style>
 </head>
 <body>
@@ -125,6 +148,8 @@
     </div>
 
 </div>
+    
+<a class="back-button" href="index.htmll">Voltar para à Página Inicial</a>
 
 <div class="footer">
     Escola Municipal de Ensino Fundamental (EMEF) Professor Antônio D'Ávila — Direitos Reservados.

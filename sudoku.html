@@ -1,706 +1,247 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Sudoku — Amigo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sudoku — Desenvolvido por Matheus Henrique</title>
+
 <style>
-  :root{
-    --bg:#0f1724;
-    --card:#0b1220;
-    --accent:#ffb233;
-    --muted:#9aa6b2;
-    --good:#2ecc71;
-    --bad:#ff4d4f;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background: linear-gradient(180deg,#071027 0%, #0f1b2a 100%);
-    color:#e6eef6;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    min-height:100vh;
-    padding:20px;
-  }
+    body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-  .app {
-    width:100%;
-    max-width:980px;
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:12px;
-    box-shadow: 0 10px 30px rgba(2,6,23,0.7);
-    padding:18px;
-    border:1px solid rgba(255,255,255,0.03);
-  }
+    h1 {
+        margin-bottom: 10px;
+    }
 
-  header{
-    display:flex;
-    gap:12px;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:14px;
-  }
+    #sudoku {
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
 
-  .title {
-    display:flex;
-    gap:12px;
-    align-items:center;
-  }
+    #sudoku td {
+        border: 1px solid #333;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        font-size: 20px;
+    }
 
-  .logo {
-    width:52px;height:52px;border-radius:10px;
-    background:linear-gradient(135deg,var(--accent),#ff6b6b);
-    display:flex;align-items:center;justify-content:center;
-    font-weight:800;font-size:20px;color:#08101a;
-    box-shadow:0 6px 18px rgba(255,178,51,0.12);
-  }
-  h1{font-size:20px;margin:0}
-  .controls {display:flex;gap:8px;align-items:center}
-  select, button {
-    background:transparent;color:var(--accent);
-    border:1px solid rgba(255,178,51,0.15);
-    padding:8px 10px;border-radius:8px;font-weight:600;
-    cursor:pointer;
-    backdrop-filter: blur(4px);
-  }
-  button.primary{
-    background:linear-gradient(90deg,var(--accent),#ff8a4d);
-    color:#08101a;border:none;
-  }
-  .top-right {
-    display:flex;gap:10px;align-items:center;
-  }
-  .board-wrap{
-    display:flex;
-    gap:18px;
-    align-items:flex-start;
-    flex-wrap:wrap;
-    justify-content:center;
-  }
+    /* Linhas grossas */
+    #sudoku tr:nth-child(3n) td {
+        border-bottom: 3px solid black;
+    }
+    #sudoku td:nth-child(3n) {
+        border-right: 3px solid black;
+    }
+    #sudoku tr:nth-child(1) td {
+        border-top: 3px solid black;
+    }
+    #sudoku td:nth-child(1) {
+        border-left: 3px solid black;
+    }
 
-  .board {
-    width:540px;height:540px;
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.03));
-    border-radius:12px;padding:14px;
-    display:grid;grid-template-columns:repeat(9,1fr);grid-template-rows:repeat(9,1fr);
-    gap:6px;box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
-  }
+    /* Inputs */
+    input {
+        width: 38px;
+        height: 38px;
+        font-size: 20px;
+        text-align: center;
+        border: none;
+    }
 
-  .cell {
-    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
-    display:flex;align-items:center;justify-content:center;
-    font-weight:700;font-size:22px;color:#dfe9f3;border-radius:8px;
-    user-select:none;cursor:pointer;position:relative;
-  }
+    input:focus {
+        background: #ffffb3;
+        outline: none;
+    }
 
-  .cell.prefill{ color:#08101a;background:linear-gradient(180deg,rgba(255,255,255,0.92),rgba(255,255,255,0.88)); }
-  .cell.selected{outline:3px solid rgba(255,178,51,0.14);transform:translateY(-2px)}
-  .cell.conflict{background:linear-gradient(180deg, rgba(255,77,79,0.12), rgba(255,77,79,0.06)); box-shadow:0 6px 18px rgba(255,77,79,0.06) inset; color:var(--bad)}
-  .cell.correct-hint{background:linear-gradient(180deg, rgba(46,204,113,0.08), rgba(46,204,113,0.05)); color:var(--good)}
-  .cell small {position:absolute;right:6px;bottom:4px;font-size:10px;color:var(--muted)}
-  /* thicker borders every 3 cells */
-  .cell:nth-child(3n) { margin-right:0 }
-  .cell:nth-child(n+1) { /* no-op placeholder */ }
+    /* Botões */
+    .btn {
+        padding: 10px 20px;
+        margin: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 6px;
+        border: none;
+    }
 
-  /* We'll overlay thick borders via pseudo-grid lines */
-  .board::before{
-    content:"";position:absolute;pointer-events:none;
-  }
+    .reset {
+        background: #ff4444;
+        color: white;
+    }
 
-  .sidebar {
-    width:240px;padding:14px;border-radius:10px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01));
-    border:1px solid rgba(255,255,255,0.02);
-    display:flex;flex-direction:column;gap:12px;height:540px;
-  }
-  .pad { display:grid;grid-template-columns:repeat(3,1fr);gap:8px }
-  .num-btn { padding:12px 0;border-radius:8px;border:1px solid rgba(255,255,255,0.03); font-weight:700; cursor:pointer }
-  .num-btn:hover { transform:translateY(-3px) }
-  .action { padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03); cursor:pointer; font-weight:700 }
+    .voltar {
+        background: #4444ff;
+        color: white;
+    }
 
-  .small { font-size:13px;color:var(--muted) }
-  .footer-note { margin-top:auto; font-size:12px;color:var(--muted); text-align:center }
+    .dificuldade {
+        background: #00aa66;
+        color: white;
+    }
 
-  /* Responsive */
-  @media(max-width:920px){
-    .board{width:420px;height:420px}
-    .sidebar{width:100%;order:3;height:auto}
-    .board-wrap{flex-direction:column;align-items:center}
-  }
-  @media(max-width:520px){
-    .board{width:320px;height:320px;gap:4px}
-    .cell{font-size:18px;border-radius:6px}
-  }
-
-#sudoku {
-    width: 360px;
-    display: grid;
-    grid-template-columns: repeat(9, 1fr);
-    gap: 2px;
-    margin: 20px auto;
-}
-
-.cell {
-    width: 38px;
-    height: 38px;
-    font-size: 20px;
-    text-align: center;
-    border: 1px solid #333;
-}
-
-.fixo {
-    background: #ddd;
-    font-weight: bold;
-}
-
-
+    footer {
+        margin-top: 25px;
+        font-size: 14px;
+        opacity: 0.7;
+    }
 </style>
 </head>
+
 <body>
-  <div class="app" role="application" aria-label="Sudoku">
-    <header>
-      <div class="title">
-        <div class="logo">S</div>
-        <div>
-          <h1>Sudoku — Resolva agora</h1>
-          <div class="small">Clique em uma célula e digite 1–9. Use 'Dica', 'Verificar' ou 'Resolver'.</div>
-        </div>
-      </div>
 
-      <div class="top-right controls">
-        <label class="small" for="difficulty">Dificuldade</label>
-        <select id="difficulty">
-          <option value="36">Fácil</option>
-          <option value="46" selected>Médio</option>
-          <option value="54">Difícil</option>
-        </select>
-        <button id="newBtn" title="Novo jogo">Novo</button>
-        <button id="checkBtn" title="Verificar conflitos">Verificar</button>
-        <button id="hintBtn" title="Preencher uma dica">Dica</button>
-        <button id="solveBtn" class="primary" title="Resolver">Resolver</button>
-      </div>
-    </header>
+<h1>Sudoku</h1>
+<p>Escolha a dificuldade e gere um novo Sudoku.</p>
 
-    <main class="board-wrap">
-      <div id="board" class="board" aria-label="Tabuleiro de Sudoku"></div>
+<!-- Botões -->
+<button class="btn dificuldade" onclick="gerarSudoku('facil')">Fácil</button>
+<button class="btn dificuldade" onclick="gerarSudoku('medio')">Médio</button>
+<button class="btn dificuldade" onclick="gerarSudoku('dificil')">Difícil</button>
+<button class="btn reset" onclick="resetarSudoku()">Resetar</button>
+<button class="btn voltar" onclick="window.location.href='index.html'">Voltar</button>
 
-      <aside class="sidebar" aria-label="Controles">
-        <div class="small">Controles de número</div>
-        <div class="pad" id="numPad">
-          <!-- números 1-9 gerados via JS -->
-        </div>
+<!-- Tabela -->
+<table id="sudoku"></table>
 
-        <div style="display:flex;gap:8px;">
-          <button id="eraseBtn" class="action">Apagar</button>
-          <button id="noteBtn" class="action">Modo Nota</button>
-        </div>
-
-        <div style="display:flex;gap:8px;">
-          <button id="resetBtn" class="action">Resetar</button>
-          <button id="clearConfBtn" class="action">Limpar Conflitos</button>
-        </div>
-
-        <div class="small">Dica rápida: Use o teclado, ou clique nos números.</div>
-        <div class="footer-note">Desenvolvido por ChatGPT — leve e funcional</div>
-      </aside>
-    </main>
-  </div>
+<footer>
+    Desenvolvido por <b>Matheus Henrique da Silva Máximo</b>
+</footer>
 
 <script>
-/*
-  Sudoku completo — gerador, solver e UI
-  Autor: ChatGPT (resposta ao usuário)
-*/
+// -------------------------------
+// Função para gerar grade vazia
+// -------------------------------
+function criarTabela() {
+    let tabela = document.getElementById("sudoku");
+    tabela.innerHTML = "";
 
-const boardEl = document.getElementById('board');
-const difficultySel = document.getElementById('difficulty');
-const newBtn = document.getElementById('newBtn');
-const checkBtn = document.getElementById('checkBtn');
-const hintBtn = document.getElementById('hintBtn');
-const solveBtn = document.getElementById('solveBtn');
-const resetBtn = document.getElementById('resetBtn');
-const eraseBtn = document.getElementById('eraseBtn');
-const noteBtn = document.getElementById('noteBtn');
-const numPad = document.getElementById('numPad');
-const clearConfBtn = document.getElementById('clearConfBtn');
+    for (let i = 0; i < 9; i++) {
+        let linha = document.createElement("tr");
 
-let solution = null;      // solved full grid
-let puzzle = null;        // current puzzle state (numbers or 0)
-let original = null;      // original puzzle to know prefilled
-let selected = null;      // index 0..80
-let noteMode = false;
+        for (let j = 0; j < 9; j++) {
+            let celula = document.createElement("td");
+            let input = document.createElement("input");
+            input.maxLength = 1;
 
-// Utilities
-function range(n){ return [...Array(n).keys()]; }
-function deepCopyGrid(g){ return g ? g.slice() : null; }
+            input.oninput = function () {
+                this.value = this.value.replace(/[^1-9]/, "");
+            };
 
-// Backtracking solver
-function findEmpty(grid){
-  for(let i=0;i<81;i++) if(grid[i]===0) return i;
-  return -1;
-}
-
-function isValid(grid, idx, val){
-  const r = Math.floor(idx/9), c = idx%9;
-  // row
-  for(let j=0;j<9;j++){
-    if(grid[r*9+j]===val) return false;
-  }
-  // col
-  for(let i=0;i<9;i++){
-    if(grid[i*9+c]===val) return false;
-  }
-  // box
-  const br = Math.floor(r/3)*3, bc = Math.floor(c/3)*3;
-  for(let i=0;i<3;i++){
-    for(let j=0;j<3;j++){
-      if(grid[(br+i)*9 + (bc+j)]===val) return false;
-    }
-  }
-  return true;
-}
-
-function solveBacktrack(grid){
-  const idx = findEmpty(grid);
-  if(idx===-1) return true;
-  for(let val=1;val<=9;val++){
-    if(isValid(grid, idx, val)){
-      grid[idx]=val;
-      if(solveBacktrack(grid)) return true;
-      grid[idx]=0;
-    }
-  }
-  return false;
-}
-
-// Generate full solved grid with randomized order
-function generateFullGrid(){
-  const grid = new Array(81).fill(0);
-  const order = range(81);
-  shuffle(order);
-  function helper(i=0){
-    const idx = findEmpty(grid);
-    if(idx===-1) return true;
-    const nums = range(9).map(n=>n+1); shuffle(nums);
-    for(const n of nums){
-      if(isValid(grid, idx, n)){
-        grid[idx]=n;
-        if(helper()) return true;
-        grid[idx]=0;
-      }
-    }
-    return false;
-  }
-  helper();
-  return grid;
-}
-
-function shuffle(arr){
-  for(let i=arr.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]];
-  }
-}
-
-// Remove cells to make puzzle (holes = number of cells removed)
-function makePuzzleFromSolution(solGrid, holes){
-  const puzzle = solGrid.slice();
-  const indices = range(81); shuffle(indices);
-  let removed = 0;
-  for(const idx of indices){
-    if(removed>=holes) break;
-    const backup = puzzle[idx];
-    puzzle[idx]=0;
-
-    // Ensure unique solution: simple check — attempt to solve and count more than one? For performance, we accept possible multiple but typical generator will be fine.
-    const copy = puzzle.slice();
-    if(!hasUniqueSolution(copy)){
-      puzzle[idx]=backup; // keep it
-    } else {
-      removed++;
-    }
-  }
-  return puzzle;
-}
-
-// Quick uniqueness check: attempt to find a second solution limitedly
-function hasUniqueSolution(grid){
-  // We'll attempt to count up to 2 solutions using backtracking with early exit
-  let count=0;
-  function helper(){
-    if(count>1) return;
-    const idx=findEmpty(grid);
-    if(idx===-1){ count++; return; }
-    for(let val=1;val<=9;val++){
-      if(isValid(grid, idx, val)){
-        grid[idx]=val;
-        helper();
-        grid[idx]=0;
-        if(count>1) return;
-      }
-    }
-  }
-  helper();
-  return count===1;
-}
-
-// Build UI
-function renderBoard(){
-  boardEl.innerHTML='';
-  for(let i=0;i<81;i++){
-    const div = document.createElement('div');
-    div.className='cell';
-    div.dataset.index=i;
-    // thicker borders for 3x3 visual separation
-    const r = Math.floor(i/9), c = i%9;
-    if(c%3===0) div.style.marginLeft='0';
-    if(r%3===0) div.style.marginTop='0';
-    if(original[i] && original[i]!==0){
-      div.classList.add('prefill');
-      div.textContent = original[i];
-    } else {
-      div.textContent = puzzle[i] || '';
-    }
-    const small = document.createElement('small');
-    small.textContent='';
-    div.appendChild(small);
-
-    div.addEventListener('click', ()=> selectCell(i));
-    boardEl.appendChild(div);
-  }
-  drawThickBorders();
-}
-
-function drawThickBorders(){
-  // We'll style borders via CSS using box-shadow or outline on specific cells
-  // Simpler approach: adjust border-radius and box-shadow for visual separation
-  const cells = boardEl.querySelectorAll('.cell');
-  cells.forEach((el, idx)=>{
-    el.style.border='';
-    const r=Math.floor(idx/9), c=idx%9;
-    let borderStr='';
-    if(c%3===0) borderStr += 'border-left: 3px solid rgba(255,255,255,0.03);';
-    if(c%3===2) borderStr += 'border-right: 3px solid rgba(255,255,255,0.03);';
-    if(r%3===0) borderStr += 'border-top: 3px solid rgba(255,255,255,0.03);';
-    if(r%3===2) borderStr += 'border-bottom: 3px solid rgba(255,255,255,0.03);';
-    el.style.cssText += borderStr;
-  });
-}
-
-function selectCell(i){
-  clearSelection();
-  selected = i;
-  const el = boardEl.querySelector(`.cell[data-index="${i}"]`);
-  if(!el) return;
-  el.classList.add('selected');
-}
-
-// clear selection visuals
-function clearSelection(){
-  const prev = boardEl.querySelector('.cell.selected');
-  if(prev) prev.classList.remove('selected');
-  selected = null;
-}
-
-// Place number into selected cell (value 1-9) or erase if 0
-function placeNumber(val){
-  if(selected===null) return;
-  if(original[selected] && original[selected]!==0) return; // cannot change prefill
-  puzzle[selected] = val===0?0:val;
-  updateCell(selected);
-}
-
-// update a single cell visual
-function updateCell(idx){
-  const el = boardEl.querySelector(`.cell[data-index="${idx}"]`);
-  if(!el) return;
-  el.classList.remove('conflict','correct-hint');
-  el.textContent = puzzle[idx]||'';
-  const small = el.querySelector('small');
-  if(small) small.textContent='';
-}
-
-// validate and mark conflicts
-function validateAndMark(){
-  // clear conflicts
-  boardEl.querySelectorAll('.cell').forEach(c=>c.classList.remove('conflict'));
-  let conflictsFound=false;
-  for(let i=0;i<81;i++){
-    const v = puzzle[i];
-    if(!v) continue;
-    // check row
-    const r = Math.floor(i/9);
-    for(let j=0;j<9;j++){
-      if(j===i%9) continue;
-      if(puzzle[r*9+j]===v){ markConflict(i); markConflict(r*9+j); conflictsFound=true; }
-    }
-    // col
-    const c = i%9;
-    for(let r2=0;r2<9;r2++){
-      const idx=r2*9+c;
-      if(idx===i) continue;
-      if(puzzle[idx]===v){ markConflict(i); markConflict(idx); conflictsFound=true; }
-    }
-    // box
-    const br = Math.floor(Math.floor(i/9)/3)*3;
-    const bc = Math.floor((i%9)/3)*3;
-    for(let rr=0;rr<3;rr++){
-      for(let cc=0;cc<3;cc++){
-        const idx=(br+rr)*9 + (bc+cc);
-        if(idx===i) continue;
-        if(puzzle[idx]===v){ markConflict(i); markConflict(idx); conflictsFound=true; }
-      }
-    }
-  }
-  return !conflictsFound;
-}
-
-function markConflict(i){
-  const el = boardEl.querySelector(`.cell[data-index="${i}"]`);
-  if(el) el.classList.add('conflict');
-}
-
-function clearConflicts(){
-  boardEl.querySelectorAll('.cell').forEach(c=>c.classList.remove('conflict'));
-}
-
-// Fill one correct empty cell (hint)
-function giveHint(){
-  // find an empty cell and fill with solution
-  const empties = range(81).filter(i=>puzzle[i]===0);
-  if(empties.length===0) return;
-  // prefer an empty that is not a prefill (they're all non-prefill)
-  shuffle(empties);
-  for(const i of empties){
-    puzzle[i]=solution[i];
-    const el = boardEl.querySelector(`.cell[data-index="${i}"]`);
-    if(el){
-      el.classList.add('correct-hint');
-      el.textContent = puzzle[i];
-    }
-    break;
-  }
-}
-
-// Reset puzzle to original
-function resetToOriginal(){
-  puzzle = original.slice();
-  renderBoard();
-}
-
-// Solve (fill with solution)
-function solvePuzzle(){
-  puzzle = solution.slice();
-  renderBoard();
-}
-
-// Create a new puzzle based on difficulty
-function newPuzzle(){
-  // generate full
-  solution = generateFullGrid();
-  // number of removals equals difficulty value in select
-  const holes = parseInt(difficultySel.value,10);
-  original = makePuzzleFromSolution(solution, holes);
-  puzzle = original.slice();
-  renderBoard();
-}
-
-// Build number pad
-function buildNumPad(){
-  numPad.innerHTML='';
-  for(let n=1;n<=9;n++){
-    const b = document.createElement('button');
-    b.className='num-btn';
-    b.textContent = n;
-    b.addEventListener('click', ()=> {
-      placeNumber(n);
-      clearConflicts();
-    });
-    numPad.appendChild(b);
-  }
-}
-
-// Keyboard handling
-window.addEventListener('keydown', (e)=>{
-  if(document.activeElement && (document.activeElement.tagName==='INPUT' || document.activeElement.tagName==='TEXTAREA')) return;
-  if(e.key>='1' && e.key<='9'){
-    placeNumber(parseInt(e.key,10));
-    clearConflicts();
-  } else if(e.key==='Backspace' || e.key==='Delete' || e.key==='0'){
-    placeNumber(0);
-    clearConflicts();
-  } else if(e.key==='ArrowLeft'){
-    if(selected===null) selectCell(0); else selectCell(Math.max(0,selected-1));
-  } else if(e.key==='ArrowRight'){
-    if(selected===null) selectCell(0); else selectCell(Math.min(80,selected+1));
-  } else if(e.key==='v' && (e.ctrlKey||e.metaKey)){
-    // Ctrl+V could paste — ignore
-  }
-});
-
-// Click outside board clears selection
-document.addEventListener('click', (e)=>{
-  if(!boardEl.contains(e.target)) clearSelection();
-});
-
-// Hook up buttons
-newBtn.addEventListener('click', ()=> {
-  newPuzzle();
-});
-checkBtn.addEventListener('click', ()=>{
-  const ok = validateAndMark();
-  if(ok) {
-    alert("Nenhum conflito encontrado — parece bom até agora!");
-  } else {
-    alert("Foram encontrados conflitos. Eles estão destacados em vermelho.");
-  }
-});
-hintBtn.addEventListener('click', ()=>{
-  giveHint();
-});
-solveBtn.addEventListener('click', ()=>{
-  if(confirm("Você quer realmente que eu resolva o puzzle inteiro?")) solvePuzzle();
-});
-resetBtn.addEventListener('click', ()=> {
-  resetToOriginal();
-  clearConflicts();
-});
-eraseBtn.addEventListener('click', ()=> {
-  placeNumber(0);
-  clearConflicts();
-});
-noteBtn.addEventListener('click', ()=>{
-  noteMode = !noteMode;
-  noteBtn.textContent = noteMode ? 'Modo Nota (ON)' : 'Modo Nota';
-});
-clearConfBtn.addEventListener('click', ()=> clearConflicts());
-
-// initialize
-buildNumPad();
-newPuzzle();
-
-// Helper: ensure solution variable is truly solved (generateFullGrid gives solved grid but ensure)
-if(!solution || !solution.every(n=>n>=1 && n<=9)){
-  solution = generateFullGrid();
-}
-
-</script>
-<script>
-function gerarTabuleiroCompleto() {
-    const board = Array.from({ length: 9 }, () => Array(9).fill(0));
-
-    function podeColocar(linha, col, num) {
-        for (let i = 0; i < 9; i++) {
-            if (board[linha][i] === num || board[i][col] === num) return false;
+            celula.appendChild(input);
+            linha.appendChild(celula);
         }
-        const startRow = Math.floor(linha / 3) * 3;
-        const startCol = Math.floor(col / 3) * 3;
-        for (let r = startRow; r < startRow + 3; r++) {
-            for (let c = startCol; c < startCol + 3; c++) {
-                if (board[r][c] === num) return false;
-            }
-        }
-        return true;
+
+        tabela.appendChild(linha);
     }
-
-    function preencher(linha, col) {
-        if (linha === 9) return true;
-        if (col === 9) return preencher(linha + 1, 0);
-
-        const numeros = [1,2,3,4,5,6,7,8,9].sort(() => Math.random() - 0.5);
-
-        for (let num of numeros) {
-            if (podeColocar(linha, col, num)) {
-                board[linha][col] = num;
-                if (preencher(linha, col + 1)) return true;
-                board[linha][col] = 0;
-            }
-        }
-        return false;
-    }
-
-    preencher(0,0);
-    return board;
 }
 
-function removerNumeros(board, quantidade = 45) {
-    const puzzle = board.map(row => [...row]);
+// -------------------------------
+// Gerador base de Sudoku válido
+// -------------------------------
+function gerarBase() {
+    let base = Array.from({ length: 9 }, (_, i) =>
+        Array.from({ length: 9 }, (_, j) =>
+            (i * 3 + Math.floor(i / 3) + j) % 9 + 1
+        )
+    );
 
-    let removidos = 0;
-    while (removidos < quantidade) {
-        const linha = Math.floor(Math.random() * 9);
-        const col = Math.floor(Math.random() * 9);
+    return base;
+}
 
-        if (puzzle[linha][col] !== 0) {
-            puzzle[linha][col] = 0;
-            removidos++;
+// Embaralhar linhas e colunas
+function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+}
+
+function embaralharSudoku(sudoku) {
+    let linhas = [0,1,2,3,4,5,6,7,8];
+    let colunas = [0,1,2,3,4,5,6,7,8];
+
+    shuffle(linhas);
+    shuffle(colunas);
+
+    let novo = Array.from({ length: 9 }, () => Array(9).fill(0));
+
+    for (let i = 0; i < 9; i++)
+        for (let j = 0; j < 9; j++)
+            novo[i][j] = sudoku[linhas[i]][colunas[j]];
+
+    return novo;
+}
+
+// -------------------------------
+// Remover números pela dificuldade
+// -------------------------------
+function aplicarDificuldade(sudoku, dificuldade) {
+    let buracos = dificuldade === "facil" ? 35 :
+                  dificuldade === "medio" ? 50 : 60;
+
+    while (buracos > 0) {
+        let i = Math.floor(Math.random() * 9);
+        let j = Math.floor(Math.random() * 9);
+
+        if (sudoku[i][j] !== "") {
+            sudoku[i][j] = "";
+            buracos--;
         }
     }
-
-    return puzzle;
 }
 
-let tabuleiroCompleto = gerarTabuleiroCompleto();
-let puzzle = removerNumeros(tabuleiroCompleto, 50);
+// -------------------------------
+// Colocar números no HTML
+// -------------------------------
+function preencherTabela(sudoku) {
+    let tabela = document.getElementById("sudoku");
 
-function criarSudoku() {
-    const container = document.getElementById("sudoku");
-    container.innerHTML = "";
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            let celula = tabela.rows[i].cells[j].firstChild;
 
-    for (let linha = 0; linha < 9; linha++) {
-        for (let col = 0; col < 9; col++) {
-            const cell = document.createElement("input");
-            cell.maxLength = 1;
-            cell.classList.add("cell");
-
-            const numero = puzzle[linha][col];
-
-            if (numero !== 0) {
-                cell.value = numero;
-                cell.disabled = true;
-                cell.classList.add("fixo");
+            if (sudoku[i][j] === "") {
+                celula.value = "";
+                celula.disabled = false;
+                celula.style.color = "black";
             } else {
-                cell.addEventListener("input", function () {
-                    this.value = this.value.replace(/[^1-9]/g, "");
-                });
+                celula.value = sudoku[i][j];
+                celula.disabled = true;
+                celula.style.color = "blue";
             }
-
-            container.appendChild(cell);
         }
     }
 }
 
-function verificarSudoku() {
-    const cells = document.querySelectorAll(".cell");
-    let correto = true;
+// -------------------------------
+// Função principal
+// -------------------------------
+let sudokuAtual = null;
 
-    for (let i = 0; i < 81; i++) {
-        const valor = Number(cells[i].value);
-        const linha = Math.floor(i / 9);
-        const col = i % 9;
+function gerarSudoku(dif) {
+    criarTabela();
 
-        if (valor !== tabuleiroCompleto[linha][col]) {
-            correto = false;
-            break;
-        }
-    }
+    let sudoku = gerarBase();
+    sudoku = embaralharSudoku(sudoku);
+    aplicarDificuldade(sudoku, dif);
 
-    if (correto) {
-        alert("Parabéns! O Sudoku foi resolvido!🎉");
-    } else {
-        alert("Ainda tem erros, tente novamente.");
+    sudokuAtual = sudoku;
+    preencherTabela(sudoku);
+}
+
+function resetarSudoku() {
+    if (sudokuAtual) {
+        gerarSudoku("medio"); // você pode mudar a dificuldade padrão
     }
 }
 
-function novoSudoku() {
-    tabuleiroCompleto = gerarTabuleiroCompleto();
-    puzzle = removerNumeros(tabuleiroCompleto, 50);
-    criarSudoku();
-}
-
-document.addEventListener("DOMContentLoaded", criarSudoku);
+criarTabela(); // Inicializa vazio
 </script>
 
 </body>

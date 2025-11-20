@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Página de Jogos</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        overflow-x: hidden;
+    }
+
+    #video-bg {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -2;
+        opacity: 0.35;
+    }
+
+    .emoji-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 200%;
+        height: 200%;
+        font-size: 60px;
+        opacity: 0.15;
+        animation: scroll 30s linear infinite;
+        z-index: -1;
+        pointer-events: none;
+        overflow: hidden;
+        white-space: pre-wrap;
+    }
+
+    @keyframes scroll {
+        0% { transform: translate(0,0); }
+        100% { transform: translate(-50%, -50%); }
+    }
+
+    .games-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
+        padding: 40px;
+    }
+
+    .game-card {
+        width: 200px;
+        text-align: center;
+    }
+
+    .game-card img {
+        width: 200px;
+        height: 200px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: 0.3s;
+        border: 3px solid #fff;
+    }
+
+    .game-card img:hover {
+        transform: scale(1.08);
+        box-shadow: 0 0 20px #fff;
+    }
+
+    .game-title {
+        font-size: 20px;
+        margin-top: 8px;
+        color: white;
+        text-shadow: 2px 2px 4px black;
+        font-weight: bold;
+    }
+
+    .footer {
+        background: orange;
+        padding: 25px;
+        margin-top: 60px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        color: #000;
+    }
+</style>
+</head>
+<body>
+
+<video autoplay muted loop id="video-bg">
+    <source src="https://cdn.pixabay.com/vimeo/332425523/arcade-21887.mp4?width=1280" type="video/mp4">
+</video>
+
+<div class="emoji-bg">
+🎮🎲🎰🕹️♟️🧩🎯🎮🕹️♟️🎰🧩🎮🕹️🎲🎯🎮♟️🕹️🎯🎰🎮🧩
+🎮🎲🎰🕹️♟️🎯🧩🎮🎯🕹️🎲♟️🎮🎯🕹️🧩🎯🎮🎰🎧🕹️🎲♟️🧩
+🎮🎲🎰🕹️♟️🧩🎯🎮🕹️♟️🎰🧩🎮🕹️🎲🎯🎮♟️🕹️🎯🎰🎮🧩
+</div>
+
+<div class="games-container">
+
+    <div class="game-card">
+        <a href="nada.html">
+            <img src="https://cdn-icons-png.flaticon.com/512/3097/3097008.png">
+        </a>
+        <div class="game-title">Jogo da Cobrinha🐍</div>
+    </div>
+
+    <div class="game-card">
+        <a href="nada.html">
+            <img src="https://cdn-icons-png.flaticon.com/512/3616/3616945.png">
+        </a>
+        <div class="game-title">Sudoku📝</div>
+    </div>
+
+    <div class="game-card">
+        <a href="nada.html">
+            <img src="https://cdn-icons-png.flaticon.com/512/3616/3616914.png">
+        </a>
+        <div class="game-title">Xadrez♟️</div>
+    </div>
+
+</div>
+
+<div class="footer">
+    Escola Municipal de Ensino Fundamental (EMEF) Professor Antônio D'Ávila — Direitos Reservados.
+</div>
+
+</body>
+</html>

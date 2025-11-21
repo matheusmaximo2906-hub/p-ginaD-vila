@@ -9,147 +9,126 @@
     body {
         margin: 0;
         padding: 0;
-        font-family: Arial, sans-serif;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        background: linear-gradient(135deg, #222, #111);
         overflow-x: hidden;
+        color: #fff;
     }
 
-    #video-bg {
-        position: fixed;
-        right: 0;
-        bottom: 0;
-        min-width: 100%;
-        min-height: 100%;
-        z-index: -2;
-        opacity: 0.35;
-    }
-
-    .emoji-bg {
+    .background-animation {
         position: fixed;
         top: 0;
         left: 0;
-        width: 200%;
-        height: 200%;
-        font-size: 60px;
-        opacity: 0.15;
-        animation: scroll 30s linear infinite;
-        z-index: -1;
-        pointer-events: none;
-        overflow: hidden;
-        white-space: pre-wrap;
-    }
-
-    @keyframes scroll {
-        0% { transform: translate(0,0); }
-        100% { transform: translate(-50%, -50%); }
+        width: 100%;
+        height: 100%;
+        background: url('https://i.gifer.com/7Scp.gif');
+        background-size: cover;
+        opacity: 0.18;
+        z-index: -2;
     }
 
     .games-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 30px;
-        justify-content: center;
-        padding: 40px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 35px;
+        padding: 60px;
+        max-width: 1200px;
+        margin: auto;
     }
 
     .game-card {
-        width: 200px;
+        background: rgba(255,255,255,0.07);
+        padding: 20px;
+        border-radius: 18px;
+        backdrop-filter: blur(6px);
+        transition: 0.3s;
         text-align: center;
+        cursor: pointer;
+        border: 2px solid rgba(255,255,255,0.3);
+    }
+
+    .game-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(255,255,255,0.5);
     }
 
     .game-card img {
         width: 200px;
         height: 200px;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: 0.3s;
-        border: 3px solid #fff;
-    }
-
-    .game-card img:hover {
-        transform: scale(1.08);
-        box-shadow: 0 0 20px #fff;
+        border-radius: 14px;
+        object-fit: cover;
+        border: 3px solid white;
     }
 
     .game-title {
-        font-size: 20px;
-        margin-top: 8px;
-        color: white;
-        text-shadow: 2px 2px 4px black;
+        margin-top: 12px;
+        font-size: 22px;
         font-weight: bold;
+        text-shadow: 1px 1px 3px #000;
     }
 
     .footer {
-        background: orange;
-        padding: 25px;
         margin-top: 60px;
-        text-align: center;
+        background: #ffb400;
+        padding: 25px;
         font-size: 20px;
         font-weight: bold;
-        color: #000;
+        color: black;
+        text-align: center;
     }
 
-.back-button {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    padding: 12px 22px;
-    background: linear-gradient(45deg, #ffcc00, #ff8800);
-    color: black;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 0 15px rgba(255, 165, 0, 0.6);
-    transition: 0.25s;
-    text-decoration: none;
-}
+    /* Botão voltar */
+    .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 14px 24px;
+        background: linear-gradient(45deg, #ffcc00, #ff8800);
+        border: none;
+        border-radius: 14px;
+        font-size: 18px;
+        font-weight: bold;
+        color: black;
+        text-decoration: none;
+        box-shadow: 0 0 15px rgba(255, 165, 0, 0.7);
+        transition: 0.25s;
+    }
 
-.back-button:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 25px rgba(255, 165, 0, 0.9);
-}
-
+    .back-button:hover {
+        transform: scale(1.08);
+        box-shadow: 0 0 25px rgba(255, 165, 0, 1);
+    }
 </style>
 </head>
 <body>
 
-<video autoplay muted loop id="video-bg">
-    <source src="https://cdn.pixabay.com/vimeo/332425523/arcade-21887.mp4?width=1280" type="video/mp4">
-</video>
+<div class="background-animation"></div>
 
-<div class="emoji-bg">
-🎮🎲🎰🕹️♟️🧩🎯🎮🕹️♟️🎰🧩🎮🕹️🎲🎯🎮♟️🕹️🎯🎰🎮🧩
-🎮🎲🎰🕹️♟️🎯🧩🎮🎯🕹️🎲♟️🎮🎯🕹️🧩🎯🎮🎰🎧🕹️🎲♟️🧩
-🎮🎲🎰🕹️♟️🧩🎯🎮🕹️♟️🎰🧩🎮🕹️🎲🎯🎮♟️🕹️🎯🎰🎮🧩
-</div>
+<a class="back-button" href="index.html">Voltar para à Página Inicial</a>
 
 <div class="games-container">
 
-    <div class="game-card">
-        <a href="pagina-anterior.html">
-            <img src="https://cdn-icons-png.flaticon.com/512/3097/3097008.png">
-        </a>
-        <div class="game-title">Jogo da Cobrinha🐍</div>
-    </div>
+    <a href="pagina-anterior.html" class="game-card">
+        <img src="https://universoretro.com.br/wp-content/uploads/2021/03/snake.jpg">
+        <div class="game-title">Jogo da Cobrinha 🐍</div>
+    </a>
 
-    <div class="game-card">
-        <a href="sudoku.html">
-            <img src="https://cdn-icons-png.flaticon.com/512/3616/3616945.png">
-        </a>
-        <div class="game-title">Sudoku📝</div>
-    </div>
+    <a href="sudoku.html" class="game-card">
+        <img src="https://img.freepik.com/vetores-gratis/design-de-logotipo-sudoku-com-lapis_1308-114893.jpg?semt=ais_hybrid&w=740&q=80">
+        <div class="game-title">Sudoku 🧠</div>
+    </a>
 
-    <div class="game-card">
-        <a href="pagina-anterior.html">
-            <img src="https://cdn-icons-png.flaticon.com/512/3616/3616914.png">
-        </a>
-        <div class="game-title">Xadrez♟️</div>
-    </div>
+    <a href="pagina-anterior.html" class="game-card">
+        <img src="https://www.estadao.com.br/recomenda/wp-content/uploads/2024/08/AdobeStock_384794463.jpeg.webp">
+        <div class="game-title">Xadrez ♟️</div>
+    </a>
+
+    <a href="shadeknight.html" class="game-card">
+        <img src="https://i.pinimg.com/originals/3b/37/68/3b3768f8decb9184160a95c4f65df0df.gif">
+        <div class="game-title">Shade Knight ⚔️</div>
+    </a>
 
 </div>
-    
-<a class="back-button" href="index.htmll">Voltar para à Página Inicial</a>
 
 <div class="footer">
     Escola Municipal de Ensino Fundamental (EMEF) Professor Antônio D'Ávila — Direitos Reservados.

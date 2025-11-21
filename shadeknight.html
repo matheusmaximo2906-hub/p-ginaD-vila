@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Shade Knight — Jogo (Versão Avançada)</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230b0b0f'/><circle cx='16' cy='12' r='8' fill='%23f8f8f4'/></svg>">
+<style>html,body{height:100%;margin:0;background:#07070a;color:#ddd;font-family:Inter,Arial}#gameWrap{display:flex;flex-direction:column;height:100vh}header{display:flex;gap:8px;align-items:center;padding:8px;background:linear-gradient(180deg,#0f1220,#07070a);box-shadow:0 4px 18px rgba(0,0,0,0.6)}header .title{font-weight:700;font-size:18px}button{background:#12131a;border:1px solid #222;padding:8px 10px;border-radius:8px;color:#ddd;cursor:pointer}button:active{transform:translateY(1px)}#ui{display:flex;gap:10px;align-items:center;margin-left:auto}#canvas{display:block;background:linear-gradient(#061026,#030409);width:100%;height:calc(100vh - 64px)}#overlay{position:fixed;left:12px;bottom:12px;background:rgba(0,0,0,0.5);padding:10px;border-radius:8px;font-size:13px}#credits{position:fixed;right:12px;bottom:12px;background:rgba(0,0,0,0.5);padding:10px;border-radius:8px;font-size:12px}#loading{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#000a;border-radius:8px;padding:10px 14px;}</style>
+</head>
+<body>
+<div id="gameWrap">
+  <header>
+    <div class="title">Shade Knight — Avançado</div>
+    <div id="ui">
+      <button id="fsToggle">Tela Cheia</button>
+      <button id="pauseBtn">Pausar</button>
+      <button id="backBtn">Voltar</button>
+    </div>
+  </header>
+  <canvas id="canvas" tabindex="0"></canvas>
+</div>
+<div id="overlay">
+  <div><strong>Controles</strong></div>
+  <div>Movimento: W A S D ou setas</div>
+  <div>Pular: W / ↑ (double jump disponível)</div>
+  <div>Dash: Q (curto cooldown)</div>
+  <div>Atacar: clique do mouse</div>
+  <div>Spell (projetil): E</div>
+</div>
+<div id="credits">Site criado por: <strong id="authorName">Você</strong> — inspirado em metroidvania.</div>
+<div id="loading">Carregando assets...</div>
+<script>
+// ====== Config e canvas ======
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+let W = canvas.width = innerWidth; let H = canvas.height = innerHeight - 64;
+window.addEventListener('resize', ()=>{W = canvas.width = innerWidth; H = canvas.height = innerHeight - 64;});
+const params = new URLSearchParams(location.search); if(params.get('author')) document.getElementById('authorName').textContent = params.get('author');
+
+// ====== Assets (procedural sprites + small atlas em memória) ======
+// We'll simulate sprites by drawing layered shapes — easy to replace by real sprite sheets later.
+
+// ====== Game state ======
+const gravity = 1600; const playerSpeed = 260; const jumpSpeed = 540;
+let last = performance.now(); let keys = {}; let mouse = {x:0,y:0,down:false}; let paused=false;
+
+// Camera
+let cam = {x:0,y:0,w:W,h:H};
+
+// World: rooms grid (3x2) with doors
+const ROOM_W = 900; const ROOM_H = H; const rooms = [];
+for(let rx=0; rx<4; rx++){
+  rooms[rx]=[];
+  for(let ry=0; ry<2; ry++){
+    rooms[rx][ry] = {x: rx*ROOM_W, y: ry*ROOM_H, platforms: [], doors: [], checkpoints: []};
+  }
+}
+// populate platforms per room (simple layout)
+for(let rx=0; rx<4; rx++) for(let ry=0; ry<2; ry++){
+  const r = rooms[rx][ry];
+  r.platforms.push({x: r.x - 200, y: r.y + ROOM_H - 60, w: ROOM_W+400, h: 60});
+  r.platforms.push({x: r.x + 120, y: r.y + ROOM_H - 220, w: 220, h: 24});
+  r.platforms.push({x: r.x + 420, y: r.y + ROOM_H - 360, w: 200, h: 24});
+  r.platforms.push({x: r.x + 760, y: r.y + ROOM_H - 260, w: 160, h: 24});
+}
+// doors between rooms
+function makeDoor(rx,ry,toRx,toRy,x,y,w,h){rooms[rx][ry].doors.push({x: x + rooms[rx][ry].x, y: y + rooms[rx][ry].y, w,h, to:{rx:toRx,ry:toRy}})}
+makeDoor(0,0,1,0, ROOM_W-40, ROOM_H-160, 36,120);
+makeDoor(1,0,2,0, ROOM_W-40, ROOM_H-160, 36,120);
+makeDoor(2,0,3,0, ROOM_W-40, ROOM_H-160, 36,120);
+// back doors
+makeDoor(1,0,0,0, 0, ROOM_H-160, 36,120);
+makeDoor(2,0,1,0, 0, ROOM_H-160, 36,120);
+makeDoor(3,0,2,0, 0, ROOM_H-160, 36,120);
+// vertical access to lower row
+makeDoor(0,0,0,1, ROOM_W/2 - 18, ROOM_H - 160, 36,120);
+makeDoor(0,1,0,0, ROOM_W/2 - 18, 40, 36,120);
+
+// checkpoints
+rooms[0][0].checkpoints.push({x: rooms[0][0].x + 60, y: rooms[0][0].y + ROOM_H - 120});
+rooms[2][0].checkpoints.push({x: rooms[2][0].x + 140, y: rooms[2][0].y + ROOM_H - 120});
+rooms[3][1].checkpoints.push({x: rooms[3][1].x + 200, y: rooms[3][1].y + ROOM_H - 120});
+
+// player
+const player = {x: 80, y: ROOM_H - 140, w:36, h:44, vx:0, vy:0, onGround:false, facing:1, hp:8, maxHp:8, attackCooldown:0, canDoubleJump:true, dashCooldown:0, canDash:true};
+let currentRoom = {rx:0,ry:0};
+
+// enemies and boss
+const enemies = [];
+function spawnEnemy(x,y,room){enemies.push({x,y,w:36,h:36,vx:50,d:1,hp:3,room})}
+spawnEnemy(600, ROOM_H-96, {rx:0,ry:0});
+spawnEnemy(1100, ROOM_H-96, {rx:1,ry:0});
+spawnEnemy(1400, ROOM_H-96, {rx:2,ry:0});
+
+// Boss in last room
+const boss = {x: rooms[3][1].x + 520, y: rooms[3][1].y + ROOM_H - 160, w:110, h:110, hp:40, phase:1, alive:true};
+
+// projectiles and attacks
+const attacks = []; const projectiles = [];
+
+// collisions
+function rectColl(a,b){return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y}
+
+// input
+addEventListener('keydown', e=>{keys[e.key.toLowerCase()] = true; if(e.key===' '){e.preventDefault()}});
+addEventListener('keyup', e=>{keys[e.key.toLowerCase()] = false});
+canvas.addEventListener('mousemove', e=>{const r = canvas.getBoundingClientRect(); mouse.x = e.clientX - r.left + cam.x; mouse.y = e.clientY - r.top + cam.y});
+canvas.addEventListener('mousedown', e=>{mouse.down=true; playerAttack();});
+canvas.addEventListener('mouseup', e=>{mouse.down=false});
+
+// abilities: dash (Q), spell (E)
+addEventListener('keydown', e=>{ if(e.key.toLowerCase()==='q'){ playerDash(); } if(e.key.toLowerCase()==='e'){ castSpell(); } });
+
+// fullscreen
+const fsToggle = document.getElementById('fsToggle'); fsToggle.addEventListener('click', ()=>{ document.documentElement.requestFullscreen().catch(()=>{}); });
+
+// pause/back
+document.getElementById('pauseBtn').addEventListener('click', ()=>{ paused=!paused; document.getElementById('pauseBtn').textContent = paused? 'Continuar':'Pausar'; if(!paused){ last = performance.now(); requestAnimationFrame(loop);} });
+document.getElementById('backBtn').addEventListener('click', ()=>{ try{history.back()}catch(e){console.log('no history')} });
+
+// attack
+function playerAttack(){ const now=performance.now()/1000; if(player.attackCooldown>now) return; player.attackCooldown=now+0.25; const dir=(mouse.x>player.x+player.w/2)?1:-1; player.facing=dir; attacks.push({x: player.x + (dir>0?player.w: -48), y: player.y + 8, w:48,h:32,t:0.12,damage:1}) }
+
+function castSpell(){ const now=performance.now()/1000; if(player.spellCooldown && player.spellCooldown>now) return; player.spellCooldown = now + 0.8; const dir = (mouse.x>player.x+player.w/2)?1:-1; projectiles.push({x: player.x + player.w/2 + dir*20, y: player.y+player.h/2, vx: dir*420, vy:0, w:12, h:8, life:2, damage:1}); }
+
+function playerDash(){ const now=performance.now()/1000; if(player.dashCooldown && player.dashCooldown>now) return; player.dashCooldown = now + 1.2; player.vx = (player.facing>0?1:-1)*800; player.canDash=false; setTimeout(()=>{player.canDash=true}, 220); }
+
+// physics step
+function step(dt){ if(paused) return; // input
+ let move=0; if(keys['arrowleft']||keys['a']) move -=1; if(keys['arrowright']||keys['d']) move +=1; player.vx = move * playerSpeed; if(move!==0) player.facing = move>0?1:-1; // jump
+ if((keys['w']||keys['arrowup']||keys[' ']) && player.onGround){ player.vy = -jumpSpeed; player.onGround=false; player.canDoubleJump=true; }
+ // double jump (press jump while midair)
+ if((keys['w']||keys['arrowup']||keys[' ']) && !player.onGround && player.canDoubleJump && !player._usedDoubleJump){ player.vy = -jumpSpeed*0.9; player._usedDoubleJump = true; player.canDoubleJump=false; }
+ if(player.onGround) player._usedDoubleJump = false;
+ // gravity
+ player.vy += gravity*dt;
+ // integrate
+ player.x += player.vx*dt; player.y += player.vy*dt;
+ // current room detection
+ currentRoom.rx = Math.floor((player.x + ROOM_W/2)/ROOM_W); currentRoom.ry = Math.floor((player.y)/ROOM_H); currentRoom.rx = Math.max(0, Math.min(3, currentRoom.rx)); currentRoom.ry = Math.max(0, Math.min(1, currentRoom.ry));
+ const room = rooms[currentRoom.rx][currentRoom.ry];
+ // collisions with platforms in all rooms (but easiest: check nearby rooms)
+ const nearbyRooms = [room];
+ for(const r of nearbyRooms){ for(const p of r.platforms){ if(rectColl(player,p)){ if(player.vy>0 && (player.y + player.h - player.vy*dt) <= p.y){ player.y = p.y - player.h; player.vy = 0; player.onGround = true; } else if(player.vy<0 && (player.y - player.vy*dt) >= p.y + p.h){ player.y = p.y + p.h; player.vy = 0; } else { if(player.vx>0) player.x = p.x - player.w; else if(player.vx<0) player.x = p.x + p.w; } } } }
+ if(player.y > ROOM_H + 400){ // fell
+   // respawn at last checkpoint or start
+   const cp = loadCheckpoint(); if(cp){ player.x = cp.x; player.y = cp.y; } else { player.x = 80; player.y = ROOM_H - 140; }
+   player.vx=0; player.vy=0; player.hp = Math.max(1, player.hp-1);
+ }
+ // door interactions
+ for(const d of room.doors){ if(rectColl(player, d)){ // teleport
+    const target = rooms[d.to.rx][d.to.ry]; // put player near door entrance on target room
+    player.x = target.x + (d.to.rx > currentRoom.rx ? 40 : (d.to.rx < currentRoom.rx ? target.w-120 : player.x - room.x + target.x));
+    player.y = target.y + ROOM_H - 160;
+ }
+ }
+ // checkpoints
+ for(const cp of room.checkpoints){ const cbox = {x:cp.x-18,y:cp.y-48,w:36,h:80}; if(rectColl(player,cbox)){ saveCheckpoint({x:cp.x,y:cp.y}); } }
+
+ // attacks lifetime
+ for(let i=attacks.length-1;i>=0;i--){ attacks[i].t -= dt; if(attacks[i].t<=0) attacks.splice(i,1); }
+ for(let i=projectiles.length-1;i>=0;i--){ projectiles[i].x += projectiles[i].vx*dt; projectiles[i].y += projectiles[i].vy*dt; projectiles[i].life -= dt; if(projectiles[i].life<=0) projectiles.splice(i,1); }
+
+ // enemies update (only in same room)
+ for(const e of enemies){ if(e.room.rx === currentRoom.rx && e.room.ry === currentRoom.ry){ e.x += e.vx*dt*e.d; // simple patrol & ground
+   // ground align
+   for(const p of room.platforms){ if(e.x + e.w > p.x && e.x < p.x + p.w){ const gy = p.y - e.h; if(Math.abs(e.y - gy) < 8){ e.y = gy; } } }
+   // flip edges
+   for(const p of room.platforms){ if(e.x + e.w/2 > p.x && e.x + e.w/2 < p.x + p.w){ const left = p.x; const right = p.x + p.w; if(e.x < left) e.d = 1; if(e.x + e.w > right) e.d = -1; } }
+   // collisions with attacks
+   for(const a of attacks) if(rectColl(e,a)){ e.hp -= a.damage; a.t = -1; }
+   for(const pr of projectiles) if(rectColl(e, pr)){ e.hp -= pr.damage; pr.life = -1; }
+ } }
+ for(let i=enemies.length-1;i>=0;i--) if(enemies[i].hp<=0) enemies.splice(i,1);
+ // player hit by enemy
+ for(const e of enemies){ if(e.room.rx===currentRoom.rx && e.room.ry===currentRoom.ry && rectColl(e, player)){ player.hp = Math.max(0, player.hp-1); player.x -= 40*(e.x<player.x?-1:1); } }
+ // boss behavior if in same room
+ if(boss.alive && currentRoom.rx===3 && currentRoom.ry===1){ // simple AI phases
+   const dx = boss.x - player.x; if(Math.abs(dx) < 380 && boss.hp > 20){ // close range: stomp
+     boss.x += (dx>0?-1:1)*80*dt;
+   } else { // shoot projectiles
+     if(!boss._shotTimer) boss._shotTimer = 0; boss._shotTimer -= dt; if(boss._shotTimer <= 0){ boss._shotTimer = 1.2; projectiles.push({x: boss.x + boss.w/2, y: boss.y + 40, vx: (player.x - boss.x>0?1:-1)*220, vy:0, w:14, h:10, life:3, damage:1}); }
+   }
+   // boss hit by attacks
+   for(const a of attacks) if(rectColl(boss,a)){ boss.hp -= a.damage; a.t = -1; }
+   for(const pr of projectiles) if(rectColl(boss, pr) && pr.vx<0){ boss.hp -= pr.damage; pr.life = -1; }
+   if(boss.hp <= 0) { boss.alive = false; }
+ }
+ // camera follow with bounds
+ cam.x = player.x + player.w/2 - W/2; cam.y = player.y + player.h/2 - H/2; cam.x = Math.max(-200, Math.min(ROOM_W*4 - W + 200, cam.x)); cam.y = Math.max(-200, Math.min(ROOM_H*2 - H + 200, cam.y));
+}
+
+// draw
+function draw(){ ctx.clearRect(0,0,W,H); // background gradient
+ const g = ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,'#071028'); g.addColorStop(1,'#02030a'); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+ // parallax moon
+ ctx.beginPath(); ctx.ellipse((W/2)-cam.x*0.06, 80 - cam.y*0.02, 160,160,0,0,Math.PI*2); ctx.fillStyle='rgba(200,220,255,0.03)'; ctx.fill();
+ // draw rooms (platforms, doors)
+ for(let rx=0; rx<4; rx++) for(let ry=0; ry<2; ry++){ const r = rooms[rx][ry]; for(const p of r.platforms){ ctx.fillStyle='#10131a'; ctx.fillRect(p.x - cam.x, p.y - cam.y, p.w, p.h); ctx.strokeStyle='#1b1f28'; ctx.strokeRect(p.x - cam.x, p.y - cam.y, p.w, p.h); }
+   // doors
+   for(const d of r.doors){ ctx.fillStyle='rgba(180,200,255,0.06)'; ctx.fillRect(d.x - cam.x, d.y - cam.y, d.w, d.h); ctx.strokeStyle='#6b88b0'; ctx.strokeRect(d.x - cam.x, d.y - cam.y, d.w, d.h); }
+   // checkpoints
+   for(const cp of r.checkpoints){ ctx.fillStyle='rgba(255,220,160,0.9)'; ctx.fillRect(cp.x - cam.x -6, cp.y - cam.y -24, 12,48); }
+ }
+ // enemies
+ for(const e of enemies){ if(e.room.rx===currentRoom.rx && e.room.ry===currentRoom.ry){ ctx.fillStyle='#8b2e2e'; ctx.fillRect(e.x - cam.x, e.y - cam.y, e.w, e.h); ctx.fillStyle='#fff'; ctx.fillRect(e.x - cam.x + e.w/4, e.y - cam.y + e.h/4, 6,6); } }
+ // boss
+ if(boss.alive && (currentRoom.rx===3 && currentRoom.ry===1 || (boss.x - cam.x > -200 && boss.x - cam.x < W+200))){ ctx.fillStyle='#6b1f4a'; ctx.fillRect(boss.x - cam.x, boss.y - cam.y, boss.w, boss.h); ctx.fillStyle='#fff'; ctx.fillRect(boss.x - cam.x + 30, boss.y - cam.y + 28, 12,12); // boss hp bar
+   ctx.fillStyle='#222'; ctx.fillRect(20, H-44, 220, 12); ctx.fillStyle='#ff6b6b'; ctx.fillRect(20, H-44, Math.max(0, (boss.hp/40)*220), 12);
+ }
+ // projectiles
+ for(const pr of projectiles){ ctx.fillStyle='rgba(200,240,255,0.9)'; ctx.fillRect(pr.x - cam.x, pr.y - cam.y, pr.w, pr.h); }
+ // attacks
+ for(const a of attacks){ ctx.fillStyle='rgba(255,220,160,0.9)'; ctx.fillRect(a.x - cam.x, a.y - cam.y, a.w, a.h); }
+ // player sprite (basic multi-frame simulated)
+ const px = player.x - cam.x; const py = player.y - cam.y; // shadow
+ ctx.fillStyle='rgba(0,0,0,0.5)'; ctx.fillRect(px+6, py+player.h-6, player.w, 8);
+ // body layers (helmet, cloak) animated by a tiny bob
+ const bob = Math.sin(Date.now()/120)*2;
+ // cloak
+ ctx.fillStyle='#0f5'; ctx.fillRect(px-4, py+8+bob, player.w+8, player.h-8);
+ // body
+ ctx.fillStyle='#f8f8f4'; ctx.fillRect(px, py, player.w, player.h);
+ // face area
+ ctx.fillStyle='#0b0b0f'; ctx.fillRect(px+6, py+6, player.w-12, player.h-24);
+ // sword
+ ctx.fillStyle='#bfc7d6'; if(player.facing>0) ctx.fillRect(px+player.w-6, py+12, 34,6); else ctx.fillRect(px-28, py+12, 34,6);
+ // HUD hp
+ for(let i=0;i<player.maxHp;i++){ ctx.fillStyle=(i<player.hp)?'#ff6b6b':'#3a3a3a'; ctx.fillRect(14 + i*22,14,18,18); ctx.strokeStyle='#111'; ctx.strokeRect(14 + i*22,14,18,18); }
+ // mini instr
+ ctx.fillStyle='rgba(255,255,255,0.04)'; ctx.fillRect(W-230,12,216,120); ctx.fillStyle='#cfd6e0'; ctx.font='12px Arial'; ctx.fillText('Clique para atacar (curto cooldown)', W-220,32); ctx.fillText('E: spell / Q: dash', W-220,52); ctx.fillText('Double jump disponível', W-220,72);
+}
+
+// main loop
+function loop(now){ const dt = Math.min(0.05,(now-last)/1000); last=now; step(dt); draw(); if(!paused) requestAnimationFrame(loop); }
+requestAnimationFrame(loop);
+
+// persistence: checkpoints
+function saveCheckpoint(cp){ localStorage.setItem('shade_cp', JSON.stringify(cp)); }
+function loadCheckpoint(){ const s = localStorage.getItem('shade_cp'); if(!s) return null; try{ return JSON.parse(s);}catch(e){return null;} }
+// loading done
+document.getElementById('loading').style.display='none';
+
+// accessibility
+canvas.focus(); addEventListener('keydown', e=>{ if(e.key==='Escape'){ document.exitFullscreen().catch(()=>{}); } });
+
+// performance / optimization notes (already applied):
+// - single canvas rendering, procedural shapes (easy to replace by sprites)
+// - small JS, no external libs, single-file easy to gzip/serve
+// To further optimize for production: minify JS/CSS, gzip/brotli on server, provide sprite atlases and compressed images, set Cache-Control headers and use a small service worker for offline caching.
+
+</script>
+</body>
+</html>

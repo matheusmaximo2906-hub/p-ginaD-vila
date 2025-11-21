@@ -1,248 +1,320 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sudoku — Desenvolvido por Matheus Henrique</title>
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sudoku — Criado por Matheus Henrique da Silva Máximo</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #f5f5f5;
-        margin: 0;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    h1 {
-        margin-bottom: 10px;
-    }
-
-    #sudoku {
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-
-    #sudoku td {
-        border: 1px solid #333;
-        width: 40px;
-        height: 40px;
-        text-align: center;
-        font-size: 20px;
-    }
-
-    /* Linhas grossas */
-    #sudoku tr:nth-child(3n) td {
-        border-bottom: 3px solid black;
-    }
-    #sudoku td:nth-child(3n) {
-        border-right: 3px solid black;
-    }
-    #sudoku tr:nth-child(1) td {
-        border-top: 3px solid black;
-    }
-    #sudoku td:nth-child(1) {
-        border-left: 3px solid black;
-    }
-
-    /* Inputs */
-    input {
-        width: 38px;
-        height: 38px;
-        font-size: 20px;
-        text-align: center;
-        border: none;
-    }
-
-    input:focus {
-        background: #ffffb3;
-        outline: none;
-    }
-
-    /* Botões */
-    .btn {
-        padding: 10px 20px;
-        margin: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 6px;
-        border: none;
-    }
-
-    .reset {
-        background: #ff4444;
-        color: white;
-    }
-
-    .voltar {
-        background: #4444ff;
-        color: white;
-    }
-
-    .dificuldade {
-        background: #00aa66;
-        color: white;
-    }
-
-    footer {
-        margin-top: 25px;
-        font-size: 14px;
-        opacity: 0.7;
-    }
+  :root{--bg:#0b0f1a;--panel:#0f1724;--accent:#ffb400;--muted:#99a1b3}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,Segoe UI,Arial;background:linear-gradient(180deg,#05060a, #071026);color:#e6eef8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .wrap{width:100%;max-width:1100px}
+  header{display:flex;gap:12px;align-items:center;margin-bottom:18px}
+  h1{margin:0;font-size:20px}
+  .meta{margin-left:auto;display:flex;gap:8px;align-items:center}
+  .btn{background:var(--accent);color:#000;padding:8px 12px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+  .btn.secondary{background:transparent;border:1px solid rgba(255,180,0,0.12);color:var(--accent)}
+  .controls{display:flex;gap:12px;align-items:center;margin-bottom:18px}
+  label{font-size:14px;color:var(--muted)}
+  input[type=text], select{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:inherit}
+  main{display:flex;gap:24px}
+  .board{background:rgba(255,255,255,0.02);padding:14px;border-radius:12px;box-shadow:0 6px 30px rgba(0,0,0,0.6)}
+  .grid{width:540px;height:540px;display:grid;grid-template-columns:repeat(9,1fr);grid-template-rows:repeat(9,1fr);gap:2px;border-radius:8px;overflow:hidden}
+  .cell{display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.02);font-size:22px;font-weight:700;cursor:pointer;user-select:none}
+  .cell input{width:100%;height:100%;text-align:center;border:0;background:transparent;color:inherit;font-size:22px;font-weight:700}
+  .cell.prefilled{background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.02));color:#cfd6e0}
+  .cell.block-right{border-right:3px solid rgba(255,255,255,0.07)}
+  .cell.block-bottom{border-bottom:3px solid rgba(255,255,255,0.07)}
+  .side{width:320px}
+  .panel{background:rgba(255,255,255,0.02);padding:14px;border-radius:12px}
+  .timer{font-size:28px;font-weight:800;text-align:center;margin-bottom:12px}
+  .leaderboard{margin-top:12px}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:8px;text-align:left;font-size:14px}
+  th{color:var(--muted);font-weight:700}
+  .small{font-size:13px;color:var(--muted)}
+  .back{position:fixed;left:18px;top:18px}
+  .credit{margin-top:12px;font-size:12px;color:var(--muted)}
 </style>
 </head>
-
 <body>
+<div class="back"><a href="pagina-anterior.html" class="btn secondary">⬅ Voltar</a></div>
+<div class="wrap">
+  <header>
+    <h1>Sudoku — Shade Games</h1>
+    <div class="meta">
+      <div class="small">Feito por: <strong id="authorName">Você</strong></div>
+    </div>
+  </header>
 
-<h1>Sudoku</h1>
-<p>Escolha a dificuldade e gere um novo Sudoku.</p>
+  <section class="controls">
+    <label>Nome: <input type="text" id="playerName" placeholder="Digite seu nome" /></label>
+    <label>Série: <select id="playerGrade"><option value="5º">5º</option><option value="6º">6º</option><option value="7º">7º</option><option value="8º">8º</option><option value="9º">9º</option><option value="Ensino Médio">Ensino Médio</option></select></label>
+    <label>Dificuldade: <select id="difficulty"><option value="easy">Fácil (remover 36)</option><option value="medium">Médio (remover 46)</option><option value="hard">Difícil (remover 54)</option></select></label>
+    <button class="btn" id="startBtn">Começar</button>
+    <button class="btn secondary" id="resetBtn">Reiniciar</button>
+  </section>
 
-<!-- Botões -->
-<button class="btn dificuldade" onclick="gerarSudoku('facil')">Fácil</button>
-<button class="btn dificuldade" onclick="gerarSudoku('medio')">Médio</button>
-<button class="btn dificuldade" onclick="gerarSudoku('dificil')">Difícil</button>
-<button class="btn reset" onclick="resetarSudoku()">Resetar</button>
-<button class="btn voltar" onclick="window.location.href='index.html'">Voltar</button>
+  <main>
+    <div class="board panel">
+      <div class="grid" id="grid"></div>
+    </div>
 
-<!-- Tabela -->
-<table id="sudoku"></table>
+    <aside class="side">
+      <div class="panel">
+        <div class="timer" id="timer">00:00</div>
+        <div style="display:flex;gap:8px;justify-content:space-between;margin-bottom:8px">
+          <button class="btn" id="checkBtn">Checar (IA)</button>
+          <button class="btn secondary" id="finishBtn">Entregar / Salvar</button>
+        </div>
+        <div class="credit">Sem dicas — este jogo não oferece ajuda. Resolução correta é necessária para salvar.</div>
 
-<footer>
-    Desenvolvido por <b>Matheus Henrique da Silva Máximo</b>
-</footer>
+        <div class="leaderboard">
+          <h3>Leaderboard</h3>
+          <table id="lbTable"><thead><tr><th>Pos</th><th>Nome</th><th>Série</th><th>Tempo</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </aside>
+  </main>
+</div>
 
 <script>
-// -------------------------------
-// Função para gerar grade vazia
-// -------------------------------
-function criarTabela() {
-    let tabela = document.getElementById("sudoku");
-    tabela.innerHTML = "";
 
-    for (let i = 0; i < 9; i++) {
-        let linha = document.createElement("tr");
+const params = new URLSearchParams(location.search);
+const authorNameEl = document.getElementById('authorName');
+if(params.get('author')) authorNameEl.textContent = params.get('author');
 
-        for (let j = 0; j < 9; j++) {
-            let celula = document.createElement("td");
-            let input = document.createElement("input");
-            input.maxLength = 1;
+const GRID_SIZE = 9;
+let solution = [];
+let puzzle = [];
+let given = [];
+let startTime = null; let timerInterval = null; let elapsed = 0;
+let running = false;
 
-            input.oninput = function () {
-                this.value = this.value.replace(/[^1-9]/, "");
-            };
+const gridEl = document.getElementById('grid');
+const timerEl = document.getElementById('timer');
+const startBtn = document.getElementById('startBtn');
+const resetBtn = document.getElementById('resetBtn');
+const checkBtn = document.getElementById('checkBtn');
+const finishBtn = document.getElementById('finishBtn');
+const playerNameEl = document.getElementById('playerName');
+const playerGradeEl = document.getElementById('playerGrade');
+const difficultyEl = document.getElementById('difficulty');
+const lbTableBody = document.querySelector('#lbTable tbody');
 
-            celula.appendChild(input);
-            linha.appendChild(celula);
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyCIbOtGxDaYumtHKwFNJwXkGYu9YlkGin8",
+  authDomain: "vererros.firebaseapp.com",
+  projectId: "vererros",
+  storageBucket: "vererros.firebasestorage.app",
+  messagingSenderId: "1023178128364",
+  appId: "1:1023178128364:web:371ebdac3a3f367b199ec9"
+};
+let firebaseEnabled = false;
+
+function tryInitFirebase(){
+  if(window.firebaseInitialized) return;
+
+  if(FIREBASE_CONFIG.apiKey === 'YOUR_API_KEY') return;
+ 
+  const s = document.createElement('script');
+  s.src = 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js';
+  s.onload = ()=>{
+    const s2 = document.createElement('script');
+    s2.src = 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js';
+    s2.onload = ()=>{
+      try{ firebase.initializeApp(FIREBASE_CONFIG); window.firebaseInitialized=true; firebaseEnabled=true; console.log('Firebase inited'); loadLeaderboardFromFirebase(); }catch(e){console.warn('Firebase init failed', e)}
+    };
+    document.head.appendChild(s2);
+  };
+  document.head.appendChild(s);
+}
+tryInitFirebase();
+
+function makeEmptyBoard(){ return Array.from({length:9},()=>Array(9).fill(0)); }
+
+function copyBoard(b){ return b.map(r=>r.slice()); }
+
+function shuffleArray(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a }
+
+function isSafe(board,row,col,num){
+  for(let x=0;x<9;x++) if(board[row][x]===num) return false;
+  for(let y=0;y<9;y++) if(board[y][col]===num) return false;
+  const sr = Math.floor(row/3)*3; const sc = Math.floor(col/3)*3;
+  for(let r=sr;r<sr+3;r++) for(let c=sc;c<sc+3;c++) if(board[r][c]===num) return false;
+  return true;
+}
+
+function solveBoard(board){
+  for(let r=0;r<9;r++) for(let c=0;c<9;c++){
+    if(board[r][c]===0){
+      for(let n=1;n<=9;n++){
+        if(isSafe(board,r,c,n)){
+          board[r][c]=n;
+          if(solveBoard(board)) return true;
+          board[r][c]=0;
         }
-
-        tabela.appendChild(linha);
+      }
+      return false;
     }
+  }
+  return true;
 }
 
-// -------------------------------
-// Gerador base de Sudoku válido
-// -------------------------------
-function gerarBase() {
-    let base = Array.from({ length: 9 }, (_, i) =>
-        Array.from({ length: 9 }, (_, j) =>
-            (i * 3 + Math.floor(i / 3) + j) % 9 + 1
-        )
-    );
+function generateSolution(){
+  const board = makeEmptyBoard();
+  const nums = [1,2,3,4,5,6,7,8,9];
 
-    return base;
+  for(let k=0;k<3;k++){
+    const arr = shuffleArray(nums.slice());
+    const sr = k*3; const sc = k*3;
+    for(let r=0;r<3;r++) for(let c=0;c<3;c++) board[sr+r][sc+c]=arr[r*3+c];
+  }
+  solveBoard(board);
+  return board;
 }
 
-// Embaralhar linhas e colunas
-function shuffle(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-}
+function removeCells(board,difficulty){
+ 
+  const removed = difficulty;
+  const b = copyBoard(board);
+  let attempts = removed;
+  while(attempts>0){
+    const r = Math.floor(Math.random()*9); const c = Math.floor(Math.random()*9);
+    if(b[r][c]===0) continue;
+    const backup = b[r][c]; b[r][c]=0;
 
-function embaralharSudoku(sudoku) {
-    let linhas = [0,1,2,3,4,5,6,7,8];
-    let colunas = [0,1,2,3,4,5,6,7,8];
-
-    shuffle(linhas);
-    shuffle(colunas);
-
-    let novo = Array.from({ length: 9 }, () => Array(9).fill(0));
-
-    for (let i = 0; i < 9; i++)
-        for (let j = 0; j < 9; j++)
-            novo[i][j] = sudoku[linhas[i]][colunas[j]];
-
-    return novo;
-}
-
-// -------------------------------
-// Remover números pela dificuldade
-// -------------------------------
-function aplicarDificuldade(sudoku, dificuldade) {
-    let buracos = dificuldade === "facil" ? 35 :
-                  dificuldade === "medio" ? 50 : 60;
-
-    while (buracos > 0) {
-        let i = Math.floor(Math.random() * 9);
-        let j = Math.floor(Math.random() * 9);
-
-        if (sudoku[i][j] !== "") {
-            sudoku[i][j] = "";
-            buracos--;
-        }
-    }
-}
-
-// -------------------------------
-// Colocar números no HTML
-// -------------------------------
-function preencherTabela(sudoku) {
-    let tabela = document.getElementById("sudoku");
-
-    for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-            let celula = tabela.rows[i].cells[j].firstChild;
-
-            if (sudoku[i][j] === "") {
-                celula.value = "";
-                celula.disabled = false;
-                celula.style.color = "black";
-            } else {
-                celula.value = sudoku[i][j];
-                celula.disabled = true;
-                celula.style.color = "blue";
+    const copy = copyBoard(b);
+    let count = 0;
+    function countSolutions(board){
+      for(let i=0;i<9;i++) for(let j=0;j<9;j++){
+        if(board[i][j]===0){
+          for(let n=1;n<=9;n++){
+            if(isSafe(board,i,j,n)){
+              board[i][j]=n;
+              countSolutions(board);
+              board[i][j]=0;
+              if(count>1) return;
             }
+          }
+          return;
         }
+      }
+      count++; if(count>1) return;
     }
+    countSolutions(copy);
+    if(count!==1){ b[r][c]=backup; attempts--; } else { attempts--; }
+  }
+  return b;
 }
 
-// -------------------------------
-// Função principal
-// -------------------------------
-let sudokuAtual = null;
-
-function gerarSudoku(dif) {
-    criarTabela();
-
-    let sudoku = gerarBase();
-    sudoku = embaralharSudoku(sudoku);
-    aplicarDificuldade(sudoku, dif);
-
-    sudokuAtual = sudoku;
-    preencherTabela(sudoku);
+function makePuzzleFromSolution(sol, removeCount){
+  const p = copyBoard(sol);
+  let removed = 0;
+  const coords = [];
+  for(let r=0;r<9;r++) for(let c=0;c<9;c++) coords.push([r,c]);
+  shuffleArray(coords);
+  for(const [r,c] of coords){ if(removed>=removeCount) break; p[r][c]=0; removed++; }
+  return p;
 }
 
-function resetarSudoku() {
-    if (sudokuAtual) {
-        gerarSudoku("medio"); // você pode mudar a dificuldade padrão
-    }
+function buildGrid(){ gridEl.innerHTML=''; for(let r=0;r<9;r++){
+  for(let c=0;c<9;c++){
+    const cell = document.createElement('div'); cell.className='cell';
+  
+    if((c+1)%3===0 && c!==8) cell.classList.add('block-right');
+    if((r+1)%3===0 && r!==8) cell.classList.add('block-bottom');
+    const input = document.createElement('input'); input.type='text'; input.maxLength=1; input.inputMode='numeric';
+    input.addEventListener('keydown', e=>{
+      if(e.key>=1 && e.key<='9'){ input.value = e.key; e.preventDefault(); updateCell(r,c,parseInt(e.key)); }
+      else if(e.key==='Backspace' || e.key==='Delete'){ input.value=''; updateCell(r,c,0); }
+      else if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Tab'].includes(e.key)){
+
+      } else {
+        e.preventDefault();
+      }
+    });
+    input.addEventListener('input', e=>{ const v = input.value.replace(/[^1-9]/g,'').slice(0,1); input.value=v; updateCell(r,c, v?parseInt(v):0); });
+    cell.appendChild(input);
+    gridEl.appendChild(cell);
+  }} }
+
+function renderBoard(){ const cells = gridEl.children; for(let r=0;r<9;r++) for(let c=0;c<9;c++){
+  const idx = r*9 + c; const cell = cells[idx]; const input = cell.querySelector('input');
+  const val = puzzle[r][c]; if(given[r][c]){ cell.classList.add('prefilled'); input.value = val; input.disabled = true; } else { cell.classList.remove('prefilled'); input.disabled = false; input.value = val||''; }
+ }}
+
+function updateCell(r,c,val){ puzzle[r][c]=val; }
+
+function startTimer(){ if(timerInterval) clearInterval(timerInterval); startTime = Date.now() - elapsed*1000; timerInterval = setInterval(()=>{ elapsed = Math.floor((Date.now()-startTime)/1000); timerEl.textContent = formatTime(elapsed); }, 200); running=true; }
+function stopTimer(){ clearInterval(timerInterval); timerInterval=null; running=false; }
+function resetTimer(){ stopTimer(); elapsed=0; timerEl.textContent='00:00'; }
+function formatTime(s){ const mm = String(Math.floor(s/60)).padStart(2,'0'); const ss = String(s%60).padStart(2,'0'); return `${mm}:${ss}`; }
+
+startBtn.addEventListener('click', ()=>{ const name = playerNameEl.value.trim(); if(!name){ alert('Digite seu nome antes de começar.'); playerNameEl.focus(); return; } generateNewPuzzle(difficultyEl.value); savePlayerName(name); startTimer(); tryInitFirebase(); });
+resetBtn.addEventListener('click', ()=>{ if(confirm('Reiniciar o tabuleiro atual? O tempo será zerado.')){ generateNewPuzzle(difficultyEl.value); resetTimer(); startTimer(); } });
+
+checkBtn.addEventListener('click', ()=>{
+  const filled = puzzle.flat().every(v=>v!==0);
+  if(!filled){ alert('Tabuleiro incompleto. Você precisa preencher todas as casas antes de checar.'); return; }
+  const copy = copyBoard(puzzle);
+  const ok = solveBoard(copy) && boardsEqual(copy, solution);
+  if(!ok){ alert('Foram encontrados erros. O jogo será reiniciado e o tempo zerado.'); generateNewPuzzle(difficultyEl.value); resetTimer(); startTimer(); } else { alert('Parabéns — solução correta! Você pode salvar seu tempo na leaderboard (ou jogar novamente).'); }
+});
+
+finishBtn.addEventListener('click', async ()=>{
+ 
+  if(puzzle.flat().some(v=>v===0)){ alert('Tabuleiro incompleto — preencha tudo antes de entregar.'); return; }
+  const copy = copyBoard(puzzle);
+  const ok = solveBoard(copy) && boardsEqual(copy, solution);
+  if(!ok){ alert('Solução incorreta — reiniciando e zerando timer.'); generateNewPuzzle(difficultyEl.value); resetTimer(); startTimer(); return; }
+
+  const entry = { name: playerNameEl.value.trim(), grade: playerGradeEl.value, time: elapsed, created: Date.now() };
+  await saveLeaderboardEntry(entry);
+  await loadLeaderboard();
+  if(confirm('Deseja jogar novamente?')){ generateNewPuzzle(difficultyEl.value); resetTimer(); startTimer(); }
+});
+
+function boardsEqual(a,b){ for(let r=0;r<9;r++) for(let c=0;c<9;c++) if(a[r][c]!==b[r][c]) return false; return true; }
+
+function generateNewPuzzle(difficulty){
+
+  let removeCount = 46; if(difficulty==='easy') removeCount=36; else if(difficulty==='hard') removeCount=54;
+  solution = generateSolution();
+
+  puzzle = makePuzzleFromSolution(solution, removeCount);
+
+  given = makeEmptyBoard().map((r,i)=>r.map((_,j)=> puzzle[i][j]!==0));
+  renderBoard();
 }
 
-criarTabela(); // Inicializa vazio
+const LB_KEY = 'sudoku_leaderboard_v1';
+async function saveLeaderboardEntry(entry){
+
+  const arr = loadLeaderboardLocal(); arr.push(entry); arr.sort((a,b)=>a.time-b.time); localStorage.setItem(LB_KEY, JSON.stringify(arr.slice(0,50)));
+
+  if(firebaseEnabled && window.firebase){ try{ const db = firebase.firestore(); await db.collection('sudoku_leaderboard').add(entry); }catch(e){ console.warn('Firebase save failed', e); } }
+}
+
+function loadLeaderboardLocal(){ try{ return JSON.parse(localStorage.getItem(LB_KEY) || '[]'); }catch(e){ return []; } }
+
+async function loadLeaderboardFromFirebase(){ if(!firebaseEnabled) return; try{ const db = firebase.firestore(); const snap = await db.collection('sudoku_leaderboard').orderBy('time','asc').limit(50).get(); const arr = []; snap.forEach(doc=>arr.push(doc.data())); // merge with local
+    const local = loadLeaderboardLocal(); const merged = local.concat(arr).sort((a,b)=>a.time-b.time).slice(0,50); localStorage.setItem(LB_KEY, JSON.stringify(merged)); await loadLeaderboard(); }catch(e){ console.warn('Firebase load failed', e); } }
+
+async function loadLeaderboard(){ const arr = loadLeaderboardLocal(); lbTableBody.innerHTML=''; for(let i=0;i<arr.length;i++){ const row = arr[i]; const tr = document.createElement('tr'); tr.innerHTML=`<td>${i+1}</td><td>${escapeHtml(row.name)}</td><td>${escapeHtml(row.grade)}</td><td>${formatTime(row.time)}</td>`; lbTableBody.appendChild(tr); } }
+
+function escapeHtml(s){ return String(s).replace(/[&<>'"]/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])) }
+
+function seedLeaderboard(){ const arr = loadLeaderboardLocal(); if(arr.length===0){ const sample = [ {name: params.get('author')||'Você', grade:'8º', time: 95, created: Date.now()}, {name:'Assistente', grade:'9º', time: 120, created: Date.now()-3600*1000} ]; localStorage.setItem(LB_KEY, JSON.stringify(sample)); } }
+
+function savePlayerName(n){ localStorage.setItem('sudoku_player_name', n); }
+function loadPlayerName(){ const n = localStorage.getItem('sudoku_player_name'); if(n) playerNameEl.value = n; }
+
+function init(){ buildGrid(); loadPlayerName(); seedLeaderboard(); loadLeaderboard(); generateNewPuzzle('medium'); resetTimer(); }
+init();
+
+window._sudoku = { generateNewPuzzle, solution };
+
 </script>
-
 </body>
 </html>
